@@ -1,0 +1,22 @@
+:root {
+    --paper: #fff8f0;
+    --ink: #222;
+    --accent: #e11d48;
+    --enemy: #ffd5d5;
+}
+
+* { box-sizing: border-box; }
+html, body, #app { height: 100%; }
+
+body {
+    margin: 0;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+    color: var(--ink);
+    background:
+            radial-gradient(circle at 10% 10%, #f5efe6 0, transparent 40%),
+            radial-gradient(circle at 90% 0, #f3e8ff 0, transparent 35%),
+            radial-gradient(circle at 0 90%, #ffe4e6 0, transparent 35%),
+            var(--paper);
+}
+
+h1 { margin: 0 0 8px; }
