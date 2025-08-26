@@ -1,5 +1,5 @@
-import {getSprite} from "@/sprites/spiteManager.js";
-import {Entity} from "@/types/entity.js";
+import {getSprite} from '@/sprites/spiteManager.js';
+import {Entity} from '@/types/entity.js';
 
 export class Effect {
     constructor(animation) {

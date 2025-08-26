@@ -1,82 +1,83 @@
 <script setup>
-import Description from "@/components/Description.vue";
-import Rules from "@/components/Rules.vue";
-import Setup from "@/components/Setup.vue";
-import Stats from "@/components/Stats.vue";
-import {Effect} from "@/entity/effect.js";
-import {TypeController} from "@/logic/attack.js"
-import {LoopController} from "@/logic/loop.js"
-import {loadSprites} from "@/sprites/spiteManager.js"
-import {useGameStore} from "@/stores/game"
-import {Animation} from "@/types/animation.js";
-import {nextTick, onMounted, onUnmounted, ref} from 'vue'
+import {nextTick, onMounted, onUnmounted, ref} from 'vue';
 
-const gameStore = useGameStore()
-const canvas = ref(null)
-const ctx = ref(null)
-const input = ref(null)
-const gameStarted = ref(false)
+import Description from '@/components/Description.vue';
+import Rules from '@/components/Rules.vue';
+import Setup from '@/components/Setup.vue';
+import Stats from '@/components/Stats.vue';
+import {Effect} from '@/entity/effect.js';
+import {TypeController} from '@/logic/attack.js';
+import {LoopController} from '@/logic/loop.js';
+import {loadSprites} from '@/sprites/spiteManager.js';
+import {useGameStore} from '@/stores/game';
+import {Animation} from '@/types/animation.js';
 
-let loopController = null
-let typeController = new TypeController()
+const gameStore = useGameStore();
+const canvas = ref(null);
+const ctx = ref(null);
+const input = ref(null);
+const gameStarted = ref(false);
+
+let loopController = null;
+let typeController = new TypeController();
 
 function setupCanvas() {
-  ctx.value = canvas.value.getContext("2d", {alpha: true})
-  canvas.value.width = gameStore.field.w
-  canvas.value.height = gameStore.field.h
-  canvas.value.style.width = gameStore.field.vw + 'px'
-  canvas.value.style.height = gameStore.field.vh + 'px'
+  ctx.value = canvas.value.getContext('2d', {alpha: true});
+  canvas.value.width = gameStore.field.w;
+  canvas.value.height = gameStore.field.h;
+  canvas.value.style.width = gameStore.field.vw + 'px';
+  canvas.value.style.height = gameStore.field.vh + 'px';
 }
 
 async function setUp() {
-  await loadSprites()
+  await loadSprites();
   gameStore.effects = {
     [Animation.COMBO]: new Effect(Animation.COMBO),
     [Animation.HEAL]: new Effect(Animation.HEAL)
-  }
-  setupCanvas()
+  };
+  setupCanvas();
 }
 
 onMounted(async () => {
-  await setUp()
-  loopController = new LoopController(ctx.value)
-})
+  await setUp();
+  loopController = new LoopController(ctx.value);
+});
 
 async function restart() {
-  loopController.stop()
-  gameStarted.value = true
-  await nextTick(() => input.value.focus())
-  loopController.start()
+  loopController.stop();
+  gameStarted.value = true;
+  await nextTick(() => input.value.focus());
+  loopController.start();
 }
 
-onUnmounted(() => restart())
+onUnmounted(() => restart());
 </script>
 
 <template>
-  <div class="game" :style="{'--max-width': `${gameStore.field.vw + 150}px`}">
+  <div class='game' :style='{&apos;--max-width&apos;: `${gameStore.field.vw + 150}px`}'>
     <h1>⚔️ Typing Game</h1>
-    <Setup v-show="!gameStarted" :on-action="restart"/>
+    <Setup v-show='!gameStarted' :on-action='restart'/>
     <Description/>
     <Rules/>
-    <div v-show="gameStarted">
+    <div v-show='gameStarted'>
       <Stats/>
       <canvas
-          ref="canvas"
-          class="battlefield"
+          ref='canvas'
+          class='battlefield'
       />
       <input
-          ref="input"
-          v-model="gameStore.input"
-          @keydown.space.prevent="typeController.checkTyped"
-          placeholder="Enter word of enemy and hit Space…"
-          class="typebox"
-          autocomplete="off"
-          autocapitalize="none"
-          spellcheck="false"
-          autofocus="autofocus"
+          ref='input'
+          v-model='gameStore.input'
+          @keydown.space.prevent='typeController.checkTyped'
+          placeholder='Enter word of enemy and hit Space…'
+          class='typebox'
+          autocomplete='off'
+          autocapitalize='none'
+          spellcheck='false'
+          autofocus='autofocus'
       />
 
-      <p class="hint">
+      <p class='hint'>
         Enter enemy word + <kbd>Space</kbd> → sword (near) or shuriken (far).
       </p>
     </div>

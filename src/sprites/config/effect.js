@@ -1,5 +1,5 @@
-import {FIELD_SIZE} from "@/constants.js";
-import {Animation} from "@/types/animation.js";
+import {FIELD_SIZE} from '@/constants.js';
+import {Animation} from '@/types/animation.js';
 
 export const effectSpritesConfig = {
     [Animation.COMBO]: {

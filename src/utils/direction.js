@@ -1,4 +1,4 @@
-import {Direction} from "@/types/direction.js";
+import {Direction} from '@/types/direction.js';
 
 export function getDirectionByAngle(angle) {
     if (angle === null) return null;

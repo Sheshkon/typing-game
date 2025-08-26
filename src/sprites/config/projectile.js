@@ -1,4 +1,4 @@
-import {Animation} from "@/types/animation.js";
+import {Animation} from '@/types/animation.js';
 
 export const projectileSpritesConfig = {
     [Animation.IDLE]: {

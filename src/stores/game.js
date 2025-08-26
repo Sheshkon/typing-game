@@ -1,9 +1,10 @@
-import {FIELD_SIZE, INITIAL_LIVES, VISIBLE_SIZE} from '@/constants.js';
-import {Enemy} from "@/entity/enemy.js";
-import {Player} from "@/entity/player.js";
-import {Projectile} from "@/entity/projectile.js";
-import {getConfig} from "@/level/level.js";
 import {defineStore} from 'pinia';
+
+import {FIELD_SIZE, INITIAL_LIVES, VISIBLE_SIZE} from '@/constants.js';
+import {Enemy} from '@/entity/enemy.js';
+import {Player} from '@/entity/player.js';
+import {Projectile} from '@/entity/projectile.js';
+import {getConfig} from '@/level/level.js';
 
 export const useGameStore = defineStore('gameStore', {
     state: () => ({
@@ -40,33 +41,33 @@ export const useGameStore = defineStore('gameStore', {
 
     actions: {
         clearInput() {
-            this.input = ''
+            this.input = '';
         },
 
         setActiveAim() {
-            this.player.hasActiveAim = true
+            this.player.hasActiveAim = true;
         },
 
         leftActiveAim() {
-            this.player.hasActiveAim = false
+            this.player.hasActiveAim = false;
         },
 
         resetGame() {
-            this.player = new Player(FIELD_SIZE / 2, FIELD_SIZE / 2)
+            this.player = new Player(FIELD_SIZE / 2, FIELD_SIZE / 2);
             this.enemies = [];
             this.projectiles = [];
-            this.gameOver = false
+            this.gameOver = false;
             this.stats = {
                 ...this.stats,
                 score: 0,
                 combo: 0,
                 lives: INITIAL_LIVES
-            }
+            };
         },
 
         updatePB() {
             if (this.stats.score > this.stats.pb){
-                this.stats.pb = this.stats.score
+                this.stats.pb = this.stats.score;
             }
         }
     }

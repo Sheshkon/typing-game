@@ -1,13 +1,13 @@
 <script setup>
-import {useGameStore} from "@/stores/game.js";
+import {useGameStore} from '@/stores/game.js';
 
-const gameStore = useGameStore()
+const gameStore = useGameStore();
 
 </script>
 
 <template>
-  <div class="stats">
-    <div>Lives: <span class="hearts">❤️ {{ gameStore.stats.lives }}</span></div>
+  <div class='stats'>
+    <div>Lives: <span class='hearts'>❤️ {{ gameStore.stats.lives }}</span></div>
     <div>Score: <b>{{ gameStore.stats.score }}</b></div>
     <div>Combo: <b>{{ gameStore.stats.combo }}</b></div>
     <div>Level: <b>{{ gameStore.level }}</b></div>

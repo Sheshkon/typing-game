@@ -1,8 +1,9 @@
 <script setup>
-import { useGameStore } from "@/stores/game.js";
-import { ref, watch } from "vue";
-import "vue-select/dist/vue-select.css";
 import { createPopper } from '@popperjs/core';
+import { ref, watch } from 'vue';
+
+import { useGameStore } from '@/stores/game.js';
+import 'vue-select/dist/vue-select.css';
 
 defineProps({
   onAction: Function
@@ -33,18 +34,18 @@ function withPopper(dropdownList, component, { width }) {
 </script>
 
 <template>
-  <div class="game-setup">
-    <button @click="onAction" class="start-btn">▶️ Play</button>
+  <div class='game-setup'>
+    <button @click='onAction' class='start-btn'>▶️ Play</button>
     <v-select
-        v-model="selectedLevel"
-        :options="levels"
-        label="label"
-        :reduce="level => level.value"
-        class="level-select"
-        :clearable="false"
-        true-value="top"
+        v-model='selectedLevel'
+        :options='levels'
+        label='label'
+        :reduce='level => level.value'
+        class='level-select'
+        :clearable='false'
+        true-value='top'
         append-to-body
-        :calculate-position="withPopper"
+        :calculate-position='withPopper'
     />
   </div>
 </template>

@@ -3,5 +3,5 @@ export const Direction = Object.freeze({
     UP: 'up',
     RIGHT: 'right',
     DOWN: 'down',
-})
+});
 

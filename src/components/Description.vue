@@ -1,5 +1,5 @@
 <template>
-  <section class="description">
+  <section class='description'>
     <h2>Game Description</h2>
     <p>
       This is a fast-paced typing and reaction game.

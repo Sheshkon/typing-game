@@ -9,11 +9,11 @@ defineProps({
     type: Number,
     default: COMBO_HEAL_COST
   }
-})
+});
 </script>
 
 <template>
-  <section class="rules">
+  <section class='rules'>
     <h2>Game Rules</h2>
     <ul>
       <li>The player is in the center of the field; enemies attack from all directions.</li>

@@ -1,4 +1,4 @@
-import {Direction} from "@/types/direction.js";
+import {Direction} from '@/types/direction.js';
 
 const directions = Object.values(Direction);
 

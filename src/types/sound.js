@@ -8,4 +8,4 @@ export const Sound = Object.freeze({
     COMBO: 'combo',
     HEAL: 'heal',
     BACKGROUND: 'background'
-})
+});

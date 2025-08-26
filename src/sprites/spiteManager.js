@@ -1,5 +1,5 @@
-import {sprites} from "@/sprites/config/sprites.js";
-import {resolveAsset} from "@/utils/assets.js";
+import {sprites} from '@/sprites/config/sprites.js';
+import {resolveAsset} from '@/utils/assets.js';
 
 export async function loadSprites() {
     const entities = Object.entries(sprites);
@@ -17,7 +17,7 @@ export async function loadSprites() {
                             resolve();
                         };
                         img.onerror = () => reject(new Error(`❌ Failed to load ${entityName}/${animName}`));
-                        img.src = resolveAsset(cfg.src)
+                        img.src = resolveAsset(cfg.src);
                     })
                 )
             );
@@ -26,7 +26,7 @@ export async function loadSprites() {
 }
 
 export function getSprite(entity, animation, direction = null) {
-    const spriteKey =  direction ? `${animation}_${direction}` : animation
+    const spriteKey =  direction ? `${animation}_${direction}` : animation;
     const cfg = sprites[entity]?.[spriteKey];
     if (!cfg || !cfg.image || !cfg.image.complete) {
         console.warn(`Sprite ${entity}/${spriteKey} not ready`);

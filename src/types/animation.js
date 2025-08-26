@@ -8,4 +8,4 @@ export const Animation = Object.freeze({
     HEAL: 'heal',
     DEATH: 'death',
     RUN: 'run'
-})
+});

@@ -1,14 +1,15 @@
-import { Sound } from "@/types/sound.js"
-import {resolveAsset} from "@/utils/assets.js";
-import { Howl } from "howler"
+import { Howl } from 'howler';
 
-const MAX_POOL_SIZE = 5
+import { Sound } from '@/types/sound.js';
+import {resolveAsset} from '@/utils/assets.js';
+
+const MAX_POOL_SIZE = 5;
 
 const POOL_CONFIG = {
     [Sound.ENEMY_RUN]: MAX_POOL_SIZE,
     [Sound.ENEMY_HURT]: MAX_POOL_SIZE,
     [Sound.ENEMY_ATTACK]: MAX_POOL_SIZE
-}
+};
 
 function createPool(key, poolSize = 1) {
     return Array.from({ length: poolSize }, () =>
@@ -16,7 +17,7 @@ function createPool(key, poolSize = 1) {
             src: resolveAsset(`sound/${key}.mp3`),
             preload: true
         })
-    )
+    );
 }
 
 export const SFX = Object.fromEntries(
@@ -27,29 +28,29 @@ export const SFX = Object.fromEntries(
             index: 0
         }
     ])
-)
+);
 
 export function playSound(name, loop = false) {
-    const sfxEntry = SFX[name]
-    if (!sfxEntry) return null
+    const sfxEntry = SFX[name];
+    if (!sfxEntry) return null;
 
-    const sound = sfxEntry.pool[sfxEntry.index]
-    sound.loop(loop)
+    const sound = sfxEntry.pool[sfxEntry.index];
+    sound.loop(loop);
 
-    const id = sound.play()
+    const id = sound.play();
 
-    sfxEntry.index = (sfxEntry.index + 1) % sfxEntry.pool.length
+    sfxEntry.index = (sfxEntry.index + 1) % sfxEntry.pool.length;
 
-    return { howl: sound, id }
+    return { howl: sound, id };
 }
 
 export function stopSound(name, id) {
     if(!name) {
-        Howler.stop()
+        Howl.stop();
     }
 
-    const sfxEntry = SFX[name]
-    if (!sfxEntry) return
+    const sfxEntry = SFX[name];
+    if (!sfxEntry) return;
 
-    sfxEntry.pool.forEach(howl => howl.stop(id))
+    sfxEntry.pool.forEach(howl => howl.stop(id));
 }

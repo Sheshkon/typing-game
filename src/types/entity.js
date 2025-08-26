@@ -3,5 +3,5 @@ export const Entity = Object.freeze({
     ENEMY: 'enemy',
     PROJECTILE: 'projectile',
     EFFECT: 'effect'
-})
+});
 

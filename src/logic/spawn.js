@@ -1,42 +1,41 @@
-import {Enemy} from "@/entity/enemy.js";
-import {playSound, SFX} from "@/sound/sound.js";
-import {useGameStore} from "@/stores/game.js"
-import {getDirectionByAngle} from "@/utils/direction.js";
-import {Sound} from "@/types/sound.js";
-import {nextWord} from "@/utils/word.js";
+import {Enemy} from '@/entity/enemy.js';
+import {playSound} from '@/sound/sound.js';
+import {useGameStore} from '@/stores/game.js';
+import {Sound} from '@/types/sound.js';
+import {getDirectionByAngle} from '@/utils/direction.js';
+import {nextWord} from '@/utils/word.js';
 
-let spawningEnabled = true
+let spawningEnabled = true;
 
 document.addEventListener('visibilitychange', () => {
-    spawningEnabled = !document.hidden
-})
+    spawningEnabled = !document.hidden;
+});
 
 export class Spawner {
     constructor() {
-        this.gameStore = useGameStore()
+        this.gameStore = useGameStore();
     }
 
     spawnEnemy() {
-        if (!spawningEnabled) return
-        const sound = playSound(Sound.ENEMY_RUN, true)
+        if (!spawningEnabled) return;
+        const sound = playSound(Sound.ENEMY_RUN, true);
         const {
             player,
-            lastIds,
             enemies,
             field,
             levelConfig,
-        } = this.gameStore
+        } = this.gameStore;
 
-        const radius = field.w / 2
-        const angle = Math.random() * Math.PI * 2
+        const radius = field.w / 2;
+        const angle = Math.random() * Math.PI * 2;
         const enemy = new Enemy({
             x: player.x + Math.cos(angle) * radius,
             y: player.y + Math.sin(angle) * radius,
             angle,
             word: nextWord(levelConfig.words)
-        })
-        enemy.direction = getDirectionByAngle(angle + Math.PI)
-        enemy.soundId = sound.id
-        enemies.push(enemy)
+        });
+        enemy.direction = getDirectionByAngle(angle + Math.PI);
+        enemy.soundId = sound.id;
+        enemies.push(enemy);
     }
 }
