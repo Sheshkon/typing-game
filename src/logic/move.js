@@ -58,7 +58,7 @@ export class MoveController {
                     player.hurt();
                     stats.lives--;
                     this.gameStore.leftActiveAim();
-                    stats.combo = 0;
+                    // stats.combo = 0;
                     if (stats.lives <= 0) {
                         this.gameStore.gameOver = true;
                     }

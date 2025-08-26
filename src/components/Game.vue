@@ -1,5 +1,6 @@
 <script setup>
-import {nextTick, onMounted, onUnmounted, ref} from 'vue';
+import {nextTick, onMounted, onUnmounted, ref, watch} from 'vue';
+import {useI18n} from 'vue-i18n';
 
 import Description from '@/components/Description.vue';
 import Rules from '@/components/Rules.vue';
@@ -12,6 +13,7 @@ import {loadSprites} from '@/sprites/spiteManager.js';
 import {useGameStore} from '@/stores/game';
 import {Animation} from '@/types/animation.js';
 
+const {t} = useI18n();
 const gameStore = useGameStore();
 const canvas = ref(null);
 const ctx = ref(null);
@@ -29,8 +31,8 @@ function setupCanvas() {
   canvas.value.style.height = gameStore.field.vh + 'px';
 }
 
-function handleKey(e) {
-  if (e.code === 'Space' || e.code === 'Enter') {
+function handleEnter(e) {
+  if (e.code === 'Enter') {
     e.preventDefault();
     typeController.checkTyped();
   }
@@ -50,6 +52,16 @@ onMounted(async () => {
   loopController = new LoopController(ctx.value);
 });
 
+watch(() => gameStore.input, (newValue) => {
+  if (newValue.endsWith(' ')) {
+    typeController.checkTyped();
+
+    nextTick(() => {
+      gameStore.input = '';
+    });
+  }
+});
+
 async function restart() {
   loopController.stop();
   gameStarted.value = true;
@@ -61,32 +73,26 @@ onUnmounted(() => restart());
 </script>
 
 <template>
-  <div class='game' :style='{&apos;--max-width&apos;: `${gameStore.field.vw + 150}px`}'>
-    <h1>⚔️ Typing Game</h1>
+  <div class='game' :style='{ "--max-width": `${gameStore.field.vw + 150}px` }'>
+    <h1>{{ t('game.title') }}</h1>
     <Setup v-show='!gameStarted' :on-action='restart'/>
     <Description/>
     <Rules/>
     <div v-show='gameStarted'>
       <Stats/>
-      <canvas
-          ref='canvas'
-          class='battlefield'
-      />
+      <canvas ref='canvas' class='battlefield'/>
       <input
           ref='input'
           v-model='gameStore.input'
-          @keydown="handleKey"
-          placeholder='Enter word of enemy and hit Space…'
+          @keydown='handleEnter'
+          :placeholder='t("game.placeholder")'
           class='typebox'
           autocomplete='off'
           autocapitalize='none'
           spellcheck='false'
-          autofocus='autofocus'
+          autofocus
       />
-
-      <p class='hint'>
-        Enter enemy word + <kbd>Space</kbd> → sword (near) or shuriken (far).
-      </p>
+      <p class='hint' v-html='t("game.hint")'/>
     </div>
   </div>
 </template>
@@ -94,12 +100,9 @@ onUnmounted(() => restart());
 <style scoped>
 .game {
   max-width: var(--max-width);
-  margin: 2rem auto;
+  margin: 0 auto;
   padding: 1rem;
   border-radius: 1rem;
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(6px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, .06);
 }
 
 .battlefield {
@@ -116,6 +119,7 @@ onUnmounted(() => restart());
   padding: 10px 12px;
   border: 2px solid #111;
   border-radius: 12px;
+  color: black;
 }
 
 .hint {

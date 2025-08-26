@@ -1,15 +1,10 @@
-import {
-    COMBO_ATTACK_COST,
-    COMBO_HEAL_COST,
-    COMBO_LIMIT,
-    COMBO_WORD,
-    HEAL_WORD,
-    INITIAL_LIVES
-} from '@/constants.js';
+import {COMBO_ATTACK_COST, COMBO_HEAL_COST, COMBO_LIMIT, INITIAL_LIVES} from '@/constants.js';
 import {useGameStore} from '@/stores/game.js';
 import {Animation} from '@/types/animation.js';
 
+
 export class TypeController {
+
     constructor() {
         this.gameStore = useGameStore();
     }
@@ -18,14 +13,14 @@ export class TypeController {
         const typed = this.gameStore.typed;
         if (!typed) return;
 
-        const {stats, player, enemies, effects} = this.gameStore;
+        const {stats, player, enemies, effects, specialWords} = this.gameStore;
 
-        if (typed === COMBO_WORD) {
+        if (typed === specialWords.combo) {
             this.#tryCombo(stats, enemies);
             return;
         }
 
-        if (typed === HEAL_WORD) {
+        if (typed === specialWords.heal) {
             this.#tryHeal(player, stats, effects);
             return;
         }
