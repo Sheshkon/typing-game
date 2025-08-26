@@ -1,6 +1,6 @@
 <script setup>
 import {createPopper} from '@popperjs/core';
-import {computed, ref, watch} from 'vue';
+import {computed, onBeforeMount, onMounted, ref, watch} from 'vue';
 import {useI18n} from 'vue-i18n';
 
 import {useGameStore} from '@/stores/game.js';
@@ -14,15 +14,19 @@ defineProps({
 });
 
 const gameStore = useGameStore();
-const selectedLevel = ref(1);
+const selectedLevel = ref(null);
 
 const levels = computed(() => Array.from({length: 7}, (_, i) => ({
   label: `${t('labels.level')} ${i + 1}`,
   value: i + 1
 })));
 
+onMounted(() => {
+  selectedLevel.value = gameStore.startLevel;
+});
+
 watch(selectedLevel, (newValue) => {
-  gameStore.startLevel = newValue;
+  gameStore.setStartLevel(newValue);
 });
 
 function withPopper(dropdownList, component, {width}) {

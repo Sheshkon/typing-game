@@ -27,7 +27,7 @@ export const useGameStore = defineStore('gameStore', {
         },
         gameOver: false,
         input: '',
-        startLevel: 1
+        startLevel: Number(localStorage.getItem('startLevel')) || 1
     }),
 
     getters: {
@@ -41,6 +41,11 @@ export const useGameStore = defineStore('gameStore', {
     actions: {
         clearInput() {
             this.input = '';
+        },
+
+        setStartLevel(level) {
+            this.startLevel = level;
+            localStorage.setItem('startLevel', String(level));
         },
 
         setActiveAim() {
