@@ -29,6 +29,13 @@ function setupCanvas() {
   canvas.value.style.height = gameStore.field.vh + 'px';
 }
 
+function handleKey(e) {
+  if (e.code === 'Space' || e.code === 'Enter') {
+    e.preventDefault();
+    typeController.checkTyped();
+  }
+}
+
 async function setUp() {
   await loadSprites();
   gameStore.effects = {
@@ -68,7 +75,7 @@ onUnmounted(() => restart());
       <input
           ref='input'
           v-model='gameStore.input'
-          @keydown.space.prevent='typeController.checkTyped'
+          @keydown="handleKey"
           placeholder='Enter word of enemy and hit Space…'
           class='typebox'
           autocomplete='off'
