@@ -1,4 +1,4 @@
-import { Howl } from 'howler';
+import { Howl, Howler } from 'howler';
 
 import { Sound } from '@/types/sound.js';
 import {resolveAsset} from '@/utils/assets.js';
@@ -46,7 +46,7 @@ export function playSound(name, loop = false) {
 
 export function stopSound(name, id) {
     if(!name) {
-        Howl.stop();
+        Howler.stop();
     }
 
     const sfxEntry = SFX[name];
