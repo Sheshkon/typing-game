@@ -1,5 +1,5 @@
 {
-  "name": "typing-samurai",
+  "name": "typing-game",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -12,7 +12,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "vue": "^3.5.18"
+    "@popperjs/core": "^2.11.8",
+    "howler": "^2.2.4",
+    "pinia": "^3.0.3",
+    "vue": "^3.5.18",
+    "vue-select": "^4.0.0-beta.6"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^6.0.1",
