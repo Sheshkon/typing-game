@@ -2,7 +2,7 @@
 import {Notifications} from '@kyvg/vue3-notification';
 import {UseFullscreen} from '@vueuse/components';
 import {Fullscreen} from 'lucide-vue-next';
-import {nextTick, onMounted, onUnmounted, ref, watch} from 'vue';
+import {nextTick, onBeforeUnmount, onMounted, onUnmounted, ref, watch} from 'vue';
 import {useI18n} from 'vue-i18n';
 
 import Description from '@/components/Description.vue';
@@ -37,13 +37,17 @@ function setupCanvas() {
 
 function toggleFullscreen(toggle) {
   toggle();
+  postToggleFullscreen();
+}
+
+function postToggleFullscreen() {
   setTimeout(() => {
     input.value?.focus();
     input.value?.scrollIntoView();
   }, 100);
 }
 
-function handleEnter(e) {
+function handleKeyDown(e) {
   if (e.code === 'Enter') {
     e.preventDefault();
     typeController.checkTyped();
@@ -59,10 +63,12 @@ async function setUp() {
   setupCanvas();
 }
 
-onMounted(async () => {
-  await setUp();
-  loopController = new LoopController(ctx.value);
-});
+async function restart() {
+  loopController.stop();
+  gameStarted.value = true;
+  await nextTick(() => input.value.focus());
+  loopController.start();
+}
 
 watch(() => gameStore.input, (newValue) => {
   if (newValue.endsWith(' ')) {
@@ -74,14 +80,17 @@ watch(() => gameStore.input, (newValue) => {
   }
 });
 
-async function restart() {
-  loopController.stop();
-  gameStarted.value = true;
-  await nextTick(() => input.value.focus());
-  loopController.start();
-}
+onUnmounted(() => {
+  restart();
+});
 
-onUnmounted(() => restart());
+onBeforeUnmount(() => window.removeEventListener('keydown', handleKeyDown));
+
+onMounted(async () => {
+  await setUp();
+  document.addEventListener('fullscreenchange', postToggleFullscreen);
+  loopController = new LoopController(ctx.value);
+});
 </script>
 
 <template>
@@ -109,7 +118,7 @@ onUnmounted(() => restart());
         <input
             ref='input'
             v-model='gameStore.input'
-            @keydown='handleEnter'
+            @keydown='handleKeyDown'
             :placeholder='t("game.placeholder")'
             class='typebox'
             autocomplete='off'
