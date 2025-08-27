@@ -81,10 +81,11 @@ export class TypeController {
     }
 
     #kick(target) {
-        const {stats, player, levelConfig} = this.gameStore;
+        const {player} = this.gameStore;
         player.attack();
         target.hurt();
-        stats.score += levelConfig.scoresPerAction;
+        this.gameStore.updateScore();
+
     }
 
     #shoot(target) {

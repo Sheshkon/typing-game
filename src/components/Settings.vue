@@ -56,18 +56,15 @@ const {t} = useI18n();
 
 <style scoped>
 .settings {
-  position: absolute;
   display: flex;
   font-weight: bold;
   flex-direction: column;
-  top: 1rem;
-  right: 1rem;
 }
 
 .sound-toggle {
   display: flex;
   margin-left: 7px;
-  margin-top: 7px;
+  margin-top: 0.25rem;
   gap: 1.4rem;
 }
 

@@ -25,12 +25,28 @@ input[type="checkbox"] {
 .v-select {
     color: var(--text-color);
     background-color: var(--bg-color);
-    min-width: 125px;
+    min-width: fit-content;
     font-weight: bold;
 }
 
-.vs__selected,
 .vs__open-indicator {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    fill: var(--text-color);
+    font-weight: bold;
+}
+
+.vs__selected {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    fill: var(--text-color);
+}
+
+.vs--open.vs--unsearchable.vs--single {
+    min-width: 8rem;
+}
+
+.vs--single{
     background-color: var(--bg-color);
     color: var(--text-color);
     fill: var(--text-color);
@@ -39,14 +55,15 @@ input[type="checkbox"] {
 .vs__dropdown-menu {
     background-color: var(--bg-color);
     color: var(--text-color);
-    min-width: 125px;
+    min-width: fit-content;
     overflow-x: hidden;
+    font-weight: bold;
 }
 
 .vs__dropdown-option {
     color: var(--text-color);
-    min-width: 125px;
     white-space: nowrap;
+    font-weight: bold;
 }
 
 * {

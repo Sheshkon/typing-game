@@ -12,7 +12,8 @@
     "lives": "Leben",
     "score": "Punktzahl",
     "combo": "Kombo",
-    "sound": "Ton"
+    "sound": "Ton",
+    "best": "Bester"
   },
   "game": {
     "title": "⚔️ Tipp-Spiel",

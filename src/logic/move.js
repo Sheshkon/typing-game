@@ -15,7 +15,7 @@ export class MoveController {
     }
 
     #moveProjectiles() {
-        const {projectiles, enemies, stats, levelConfig} = this.gameStore;
+        const {projectiles, enemies} = this.gameStore;
         projectiles.forEach(s => {
             s.x += s.vx;
             s.y += s.vy;
@@ -27,7 +27,7 @@ export class MoveController {
                 if (Math.sqrt(dx * dx + dy * dy) < COLLISION_ATTACK) {
                     s.isDead = true;
                     hitEnemy.hurt();
-                    stats.score += levelConfig.scoresPerAction;
+                    this.gameStore.updateScore();
                     this.gameStore.leftActiveAim();
                 }
             }

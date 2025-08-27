@@ -3,6 +3,7 @@ import {createPopper} from '@popperjs/core';
 import {computed, onMounted, ref, watch} from 'vue';
 import {useI18n} from 'vue-i18n';
 
+import Settings from '@/components/Settings.vue';
 import {LEVELS_COUNT} from '@/level/config.js';
 import {useGameStore} from '@/stores/game.js';
 
@@ -59,6 +60,7 @@ function withPopper(dropdownList, component, {width}) {
         :searchable='false'
         :calculate-position='withPopper'
     />
+    <Settings/>
   </div>
 </template>
 
@@ -66,13 +68,14 @@ function withPopper(dropdownList, component, {width}) {
 .game-setup {
   display: flex;
   /* justify-content: center; */
-  align-items: center;
+  align-items: start;
   gap: 0.5rem;
+  margin-top: 1rem;
 }
 
 .start-btn {
   border: none;
-  padding: 0.5rem 1.2rem;
+  padding: 0.3rem 1.2rem;
   font-size: 1rem;
   font-weight: bold;
   border-radius: 8px;

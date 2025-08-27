@@ -1,3 +1,5 @@
+import {notify} from '@kyvg/vue3-notification';
+
 import {AnimationController} from '@/logic/animation.js';
 import {MoveController} from '@/logic/move.js';
 import {Spawner} from '@/logic/spawn.js';
@@ -50,8 +52,13 @@ export class LoopController {
         if (this.gameStore.gameOver) {
             stopSound();
             this.stop();
-            this.gameStore.updatePB();
-            alert(`Game Is Over! Score: ${this.gameStore.stats.score}`);
+            notify({
+                type: 'error',
+                duration: 3000,
+                title: 'Game Is Over',
+                text: `Score: ${this.gameStore.stats.score}`,
+            });
+            // alert(`Game Is Over! Score: ${this.gameStore.stats.score}`);
             this.gameStore.resetGame();
             this.start();
             this.gameStore.gameOver = false;

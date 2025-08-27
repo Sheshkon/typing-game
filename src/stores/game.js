@@ -33,7 +33,7 @@ export const useGameStore = defineStore('gameStore', {
 
     getters: {
         typed: state => state.input.trim().toLowerCase(),
-        entities: state => [...state.enemies, state.player, ...state.projectiles],
+        entities: state => [state.player, ...state.enemies, ...state.projectiles],
         level: state => Math.floor(state.stats.score / 100) + state.startLevel,
         levelConfig: state => getConfig(i18n.global.locale.value, state.level),
         specialWords: () => locales[i18n.global.locale.value].specialWords,
@@ -70,10 +70,11 @@ export const useGameStore = defineStore('gameStore', {
             };
         },
 
-        updatePB() {
+        updateScore(){
+            this.stats.score += this.levelConfig.scoresPerAction;
             if (this.stats.score > this.stats.pb) {
                 this.stats.pb = this.stats.score;
             }
-        }
+        },
     }
 });

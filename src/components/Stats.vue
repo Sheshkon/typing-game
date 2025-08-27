@@ -13,6 +13,7 @@ const { t } = useI18n();
     <div>{{ t('labels.score')}}: <b>{{ gameStore.stats.score }}</b></div>
     <div>{{ t('labels.combo') }}: <b>{{ gameStore.stats.combo }}</b></div>
     <div>{{ t('labels.level') }}: <b>{{ gameStore.level }}</b></div>
+    <div>{{ t('labels.best') }}: <b>{{ gameStore.stats.pb}}</b></div>
   </div>
 
 </template>
@@ -21,6 +22,7 @@ const { t } = useI18n();
 .stats {
   display: flex;
   justify-content: space-around;
+  gap: 1rem;
   margin-bottom: 10px
 }
 </style>

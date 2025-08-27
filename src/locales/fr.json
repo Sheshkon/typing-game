@@ -12,7 +12,8 @@
     "lives": "Vies",
     "score": "Score",
     "combo": "Combo",
-    "sound": "Son"
+    "sound": "Son",
+    "best": "Meilleur"
   },
   "game": {
     "title": "⚔️ Jeu de frappe",

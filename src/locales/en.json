@@ -12,7 +12,8 @@
     "lives": "Lives",
     "score": "Score",
     "combo": "Combo",
-    "sound": "Sound"
+    "sound": "Sound",
+    "best": "Best"
   },
   "game": {
     "title": "⚔️ Typing Game",
