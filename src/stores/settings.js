@@ -1,44 +1,37 @@
 import {Howler} from 'howler';
 import {defineStore} from 'pinia';
-import {ref, watch, watchEffect} from 'vue';
+import {ref, watch} from 'vue';
 
 import {i18n} from '@/i18n.js';
 import {Language} from '@/types/language.js';
+import {Theme} from '@/types/theme.js';
 
 export const useSettingsStore = defineStore('settings', () => {
     const isSoundEnabled = ref(JSON.parse(localStorage.getItem('soundEnabled') ?? 'true'));
     const language = ref(localStorage.getItem('language') ?? Language.EN);
-    const theme = ref(localStorage.getItem('theme') ?? Language.RU);
+    const theme = ref(localStorage.getItem('theme') ?? Theme.Light);
 
-    function toggleSound() {
-        isSoundEnabled.value = !isSoundEnabled.value;
-    }
+    watch(theme, (newTheme) => {
+        localStorage.setItem('theme', newTheme);
+               document.querySelectorAll('.theme-wrapper').forEach(el => {
+            el.classList.toggle('dark', newTheme === Theme.Dark);
+        });
+    }, {immediate: true});
 
-    function setLanguage(lang) {
-        language.value = lang;
+    watch(isSoundEnabled, (value) => {
+        localStorage.setItem('soundEnabled', JSON.stringify(value));
+        Howler.mute(!value);
+    }, {immediate: true});
+
+    watch(language, (lang) => {
         localStorage.setItem('language', lang);
         i18n.global.locale.value = lang;
-    }
-
-    function setTheme(newTheme) {
-        theme.value = newTheme;
-        localStorage.setItem('theme', newTheme);
-    }
-
-    watchEffect(() => {
-        Howler.mute(!isSoundEnabled.value);
-    });
-
-    watch(isSoundEnabled, (val) => {
-        localStorage.setItem('soundEnabled', JSON.stringify(val));
-    });
+    }, {immediate: true});
 
     return {
         isSoundEnabled,
         language,
-        theme,
-        toggleSound,
-        setLanguage,
-        setTheme
+        theme
     };
 });
+

@@ -1,5 +1,4 @@
 <script setup>
-import {storeToRefs} from 'pinia';
 import {computed} from 'vue';
 import {useI18n} from 'vue-i18n';
 
@@ -10,8 +9,6 @@ import {getThemeOptions} from '@/utils/theme.js';
 const settings = useSettingsStore();
 const languageOptions = computed(() => getLanguageOptions());
 const themeOptions = computed(() => getThemeOptions(settings.language));
-const {isSoundEnabled, language, theme} = storeToRefs(settings);
-const {toggleSound, setLanguage, setTheme} = settings;
 
 const {t} = useI18n();
 
@@ -22,8 +19,7 @@ const {t} = useI18n();
     <div class='field'>
       <v-select
           id='lang'
-          v-model='language'
-          @update:modelValue='setLanguage'
+          v-model='settings.language'
           :reduce='option => option.value'
           :options='languageOptions'
           :clearable='false'
@@ -36,8 +32,7 @@ const {t} = useI18n();
     <div class='field'>
       <v-select
           id='theme'
-          v-model='theme'
-          @update:modelValue='setTheme'
+          v-model='settings.theme'
           :reduce='option => option.value'
           :options='themeOptions'
           :clearable='false'
@@ -50,11 +45,10 @@ const {t} = useI18n();
     <div class='sound-toggle'>
       <label for='sound'>{{ t('labels.sound') }}</label>
       <input
+          v-model='settings.isSoundEnabled'
           type='checkbox'
           id='sound'
           class='sound-toggle-checkbox'
-          :checked='isSoundEnabled'
-          @change='toggleSound'
       />
     </div>
   </div>
