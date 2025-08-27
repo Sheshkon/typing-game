@@ -1,0 +1,41 @@
+{
+  "language": "Deutsch",
+  "dark": "Dunkel",
+  "light": "Hell",
+  "specialWords": {
+    "combo": "kombo",
+    "heal": "heilen"
+  },
+  "labels": {
+    "play": "Spielen",
+    "level": "Level",
+    "lives": "Leben",
+    "score": "Punktzahl",
+    "combo": "Kombo",
+    "sound": "Ton"
+  },
+  "game": {
+    "title": "⚔️ Tipp-Spiel",
+    "placeholder": "Wort des Feindes eingeben und Leertaste drücken…",
+    "hint": "Feindwort + Leertaste → Schwert (nah) oder Shuriken (fern)."
+  },
+  "description": {
+    "title": "Spielbeschreibung",
+    "paragraphs": [
+      "Dies ist ein schnelles Tipp- und Reaktionsspiel. Du steuerst einen Helden in der Mitte der Arena und verteidigst dich gegen Wellen von Feinden, die aus allen Richtungen kommen.",
+      "Deine Hauptaufgabe ist es, die Wörter über den Köpfen der Feinde schnell zu tippen, um Shuriken auf sie zu werfen, oder, wenn sie nahe sind, sie mit deinem Schwert zu schlagen. Sammle Kombopunkte, um mächtige Angriffe auszulösen oder deine Gesundheit wiederherzustellen.",
+      "Die Feinde werden mit jeder Welle schneller und gefährlicher — bleib wachsam!"
+    ]
+  },
+  "rules": {
+    "title": "Spielregeln",
+    "items": [
+      "Der Spieler steht in der Mitte des Feldes; Feinde greifen aus allen Richtungen an.",
+      "Um einen Shuriken zu werfen — tippe das Wort über dem Kopf des Feindes in das Eingabefeld.",
+      "Wenn der Feind zu nahe ist, löst das Tippen einen Schwertangriff aus.",
+      "Wenn ein Feind den Spieler erreicht — verliert der Spieler 1 Leben.",
+      "Wort „kombo“ — zerstört alle Feinde in der Umgebung. Kosten: {combo} Kombopunkte.",
+      "Wort „heilen“ — stellt 1 Leben wieder her. Kosten: {heal} Kombopunkte."
+    ]
+  }
+}

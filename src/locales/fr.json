@@ -1,0 +1,41 @@
+{
+  "language": "Français",
+  "dark": "Sombre",
+  "light": "Clair",
+  "specialWords": {
+    "combo": "combo",
+    "heal": "soin"
+  },
+  "labels": {
+    "play": "Jouer",
+    "level": "Niveau",
+    "lives": "Vies",
+    "score": "Score",
+    "combo": "Combo",
+    "sound": "Son"
+  },
+  "game": {
+    "title": "⚔️ Jeu de frappe",
+    "placeholder": "Entrez le mot de l'ennemi et appuyez sur Espace…",
+    "hint": "Mot de l'ennemi + Espace → épée (proche) ou shuriken (loin)."
+  },
+  "description": {
+    "title": "Description du jeu",
+    "paragraphs": [
+      "C'est un jeu de frappe et de réaction rapide. Vous contrôlez un héros au centre de l'arène, défendant contre des vagues d'ennemis venant de toutes les directions.",
+      "Votre tâche principale est de taper rapidement les mots au-dessus des têtes des ennemis pour leur lancer des shurikens, ou, s'ils sont proches, pour les frapper avec votre épée. Gagnez des points de combo pour déclencher des attaques puissantes ou restaurer votre santé.",
+      "Les ennemis deviennent plus rapides et plus dangereux à chaque vague — restez vigilant !"
+    ]
+  },
+  "rules": {
+    "title": "Règles du jeu",
+    "items": [
+      "Le joueur est au centre du terrain ; les ennemis attaquent de toutes les directions.",
+      "Pour lancer un shuriken — tapez le mot au-dessus de la tête de l'ennemi dans le champ de saisie.",
+      "Si l'ennemi est trop proche, taper déclenche une attaque à l'épée.",
+      "Si un ennemi atteint le joueur — le joueur perd 1 vie.",
+      "Mot «combo» — détruit tous les ennemis autour. Coût : {combo} points de combo.",
+      "Mot «soin» — restaure 1 vie. Coût : {heal} points de combo."
+    ]
+  }
+}

@@ -1,3 +1,4 @@
+import {SPAWN_RADIUS} from '@/constants.js';
 import {Enemy} from '@/entity/enemy.js';
 import {playSound} from '@/sound/sound.js';
 import {useGameStore} from '@/stores/game.js';
@@ -22,15 +23,13 @@ export class Spawner {
         const {
             player,
             enemies,
-            field,
             levelConfig,
         } = this.gameStore;
 
-        const radius = field.w / 2;
         const angle = Math.random() * Math.PI * 2;
         const enemy = new Enemy({
-            x: player.x + Math.cos(angle) * radius,
-            y: player.y + Math.sin(angle) * radius,
+            x: player.x + Math.cos(angle) * SPAWN_RADIUS,
+            y: player.y + Math.sin(angle) * SPAWN_RADIUS,
             angle,
             word: nextWord(levelConfig.words)
         });

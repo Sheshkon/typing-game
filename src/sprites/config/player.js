@@ -8,6 +8,7 @@ export const playerSpritesConfig = {
         speed: 100,
         loop: true,
         isMultiDirectional: true,
+        scale: 4.5,
     },
     [Animation.HURT]: {
         frames: 8,
@@ -16,6 +17,7 @@ export const playerSpritesConfig = {
         speed: 100,
         loop: true,
         isMultiDirectional: true,
+        scale: 4.5,
     },
     [Animation.ATTACK]: {
         frames: 8,
@@ -24,7 +26,6 @@ export const playerSpritesConfig = {
         speed: 50,
         loop: false,
         isMultiDirectional: true,
+        scale: 4.5,
     },
 };
-
-

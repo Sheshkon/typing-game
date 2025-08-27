@@ -8,6 +8,7 @@ export const enemySpritesConfig = {
         speed: 100,
         loop: true,
         isMultiDirectional: true,
+        scale: 4,
     },
 
     [Animation.ATTACK]: {
@@ -17,6 +18,7 @@ export const enemySpritesConfig = {
         speed: 30,
         loop: false,
         isMultiDirectional: true,
+        scale: 4,
     },
 
     [Animation.DEATH]: {
@@ -26,6 +28,7 @@ export const enemySpritesConfig = {
         speed: 50,
         loop: false,
         isMultiDirectional: true,
+        scale: 4,
     },
 };
 

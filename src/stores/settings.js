@@ -3,11 +3,12 @@ import {defineStore} from 'pinia';
 import {ref, watch, watchEffect} from 'vue';
 
 import {i18n} from '@/i18n.js';
+import {Language} from '@/types/language.js';
 
 export const useSettingsStore = defineStore('settings', () => {
     const isSoundEnabled = ref(JSON.parse(localStorage.getItem('soundEnabled') ?? 'true'));
-    const language = ref(localStorage.getItem('language') ?? 'EN');
-    const theme = ref(localStorage.getItem('theme') ?? 'Light');
+    const language = ref(localStorage.getItem('language') ?? Language.EN);
+    const theme = ref(localStorage.getItem('theme') ?? Language.RU);
 
     function toggleSound() {
         isSoundEnabled.value = !isSoundEnabled.value;

@@ -14,7 +14,7 @@ export class Player extends EntityBase {
         super({
             x: x,
             y: y,
-            scale: 2,
+            scale: 4,
             angle: 0,
             entity: Entity.PLAYER,
             animation: Animation.IDLE,

@@ -109,7 +109,7 @@ onUnmounted(() => restart());
   display: block;
   border: 2px solid #111;
   margin: 0 auto 12px;
-  background-image: url('../assets/back.png');
+  background-image: url('../assets/background.png');
   background-size: cover;
 }
 

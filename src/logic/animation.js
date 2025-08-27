@@ -107,13 +107,13 @@ export class AnimationController {
 
         if (!spriteConfig) return;
 
-        const {width, height, frames, image} = spriteConfig;
+        const {width, height, frames, image, scale} = spriteConfig;
 
         const frameWidth = width / frames;
 
         this.ctx.save();
         this.ctx.translate(entity.x, entity.y);
-        this.ctx.scale(entity.scale, entity.scale);
+        this.ctx.scale(scale, scale);
         this.ctx.drawImage(
             image,
             entity.sprite.frame * frameWidth, 0, frameWidth, height,

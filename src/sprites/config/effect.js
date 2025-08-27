@@ -10,7 +10,7 @@ export const effectSpritesConfig = {
         loop: false,
         x: FIELD_SIZE / 2 - 6,
         y: FIELD_SIZE / 2,
-        scale: 2.5
+        scale: 4
     },
     [Animation.HEAL]: {
         frames: 12,
@@ -20,7 +20,7 @@ export const effectSpritesConfig = {
         loop: false,
         x: FIELD_SIZE / 2 - 6,
         y: FIELD_SIZE / 2,
-        scale: 2.5
+        scale: 4
     },
 };
 

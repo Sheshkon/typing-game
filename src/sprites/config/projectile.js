@@ -6,6 +6,7 @@ export const projectileSpritesConfig = {
         width: 64,
         height: 32,
         speed: 50,
-        loop: true
+        loop: true,
+        scale: 2,
     }
 };

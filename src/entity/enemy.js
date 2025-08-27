@@ -18,7 +18,6 @@ export class Enemy extends EntityBase {
         this.id = ++Enemy._id;
         this.word = word;
         this.speed = 1;
-        this.scale = 2;
         this.soundId = null;
         this.isUnderAttack = false;
     }

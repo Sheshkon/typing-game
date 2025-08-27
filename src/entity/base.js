@@ -3,10 +3,9 @@ import {Animation} from '@/types/animation.js';
 import {getDirectionByAngle} from '@/utils/direction.js';
 
 export class EntityBase {
-    constructor({x, y, scale, angle, entity, animation}) {
+    constructor({x, y, angle, entity, animation}) {
         this.x = x;
         this.y = y;
-        this.scale = scale;
         this.angle = angle;
         this.sprite = new SpriteInfo(entity, animation);
         this.direction = getDirectionByAngle(angle);

@@ -1,8 +1,9 @@
 <script setup>
 import {createPopper} from '@popperjs/core';
-import {computed, onBeforeMount, onMounted, ref, watch} from 'vue';
+import {computed, onMounted, ref, watch} from 'vue';
 import {useI18n} from 'vue-i18n';
 
+import {LEVELS_COUNT} from '@/level/config.js';
 import {useGameStore} from '@/stores/game.js';
 
 import 'vue-select/dist/vue-select.css';
@@ -16,7 +17,7 @@ defineProps({
 const gameStore = useGameStore();
 const selectedLevel = ref(null);
 
-const levels = computed(() => Array.from({length: 7}, (_, i) => ({
+const levels = computed(() => Array.from({length: LEVELS_COUNT}, (_, i) => ({
   label: `${t('labels.level')} ${i + 1}`,
   value: i + 1
 })));

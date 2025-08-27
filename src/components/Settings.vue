@@ -4,22 +4,16 @@ import {computed} from 'vue';
 import {useI18n} from 'vue-i18n';
 
 import {useSettingsStore} from '@/stores/settings';
+import {getLanguageOptions} from '@/utils/language.js';
+import {getThemeOptions} from '@/utils/theme.js';
 
 const settings = useSettingsStore();
+const languageOptions = computed(() => getLanguageOptions());
+const themeOptions = computed(() => getThemeOptions(settings.language));
 const {isSoundEnabled, language, theme} = storeToRefs(settings);
 const {toggleSound, setLanguage, setTheme} = settings;
 
 const {t} = useI18n();
-
-const languageOptions = [
-  {label: 'English', value: 'EN'},
-  {label: 'Русский', value: 'RU'}
-];
-
-const themeOptions = computed(() => [
-  {label: t('labels.dark'), value: 'Dark'},
-  {label: t('labels.light'), value: 'Light'}
-]);
 
 </script>
 

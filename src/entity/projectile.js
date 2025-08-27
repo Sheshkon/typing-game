@@ -10,7 +10,6 @@ export class Projectile extends EntityBase {
             x,
             y,
             angle: 0,
-            scale: 1,
             entity: Entity.PROJECTILE,
             animation: Animation.IDLE,
         });

@@ -1,4 +1,7 @@
 {
+  "language": "English",
+  "dark": "Dark",
+  "light": "Light",
   "specialWords": {
     "combo": "combo",
     "heal": "heal"
@@ -9,8 +12,6 @@
     "lives": "Lives",
     "score": "Score",
     "combo": "Combo",
-    "dark": "Dark",
-    "light": "Light",
     "sound": "Sound"
   },
   "game": {

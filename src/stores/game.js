@@ -5,7 +5,8 @@ import {Enemy} from '@/entity/enemy.js';
 import {Player} from '@/entity/player.js';
 import {Projectile} from '@/entity/projectile.js';
 import {i18n} from '@/i18n.js';
-import {getConfig} from '@/level/level.js';
+import {getConfig} from '@/level/config.js';
+import {locales} from '@/locales/locale.js';
 
 export const useGameStore = defineStore('gameStore', {
     state: () => ({
@@ -35,7 +36,7 @@ export const useGameStore = defineStore('gameStore', {
         entities: state => [...state.enemies, state.player, ...state.projectiles],
         level: state => Math.floor(state.stats.score / 100) + state.startLevel,
         levelConfig: state => getConfig(i18n.global.locale.value, state.level),
-        specialWords: () => i18n.global.messages.value[i18n.global.locale.value].specialWords,
+        specialWords: () => locales[i18n.global.locale.value].specialWords,
     },
 
     actions: {
