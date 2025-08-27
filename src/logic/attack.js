@@ -40,6 +40,7 @@ export class TypeController {
             const dist = Math.hypot(dx, dy);
 
             this.#lookAt(target.x, target.y);
+            stats.last.correctWordsCount++;
 
             if (dist <= player.nearAttackRadius) {
                 this.#kick(target);
@@ -51,6 +52,7 @@ export class TypeController {
             }
         } else {
             stats.combo = 0;
+            stats.last.wrongWordsCount++;
         }
     }
 
@@ -59,6 +61,7 @@ export class TypeController {
             player.heal(effects);
             stats.lives++;
             stats.combo -= COMBO_HEAL_COST;
+            stats.last.healCount++;
         }
         this.gameStore.clearInput();
     }
@@ -67,6 +70,7 @@ export class TypeController {
         if (stats.combo >= COMBO_ATTACK_COST && enemies.filter(e => !e.isDyingOrDead).length) {
             this.#comboAttack();
             stats.combo -= COMBO_ATTACK_COST;
+            stats.last.comboCount++;
         }
         this.gameStore.clearInput();
     }

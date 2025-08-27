@@ -24,7 +24,16 @@ export const useGameStore = defineStore('gameStore', {
             score: 0,
             combo: 0,
             lives: INITIAL_LIVES,
-            pb: 0
+            pb: 0,
+            last: {
+                comboCount: 0,
+                healCount: 0,
+                wrongWordsCount: 0,
+                correctWordsCount: 0,
+                startTime: null,
+                endTime: null,
+                attempt: 0
+            }
         },
         gameOver: false,
         input: '',
@@ -66,7 +75,16 @@ export const useGameStore = defineStore('gameStore', {
                 ...this.stats,
                 score: 0,
                 combo: 0,
-                lives: INITIAL_LIVES
+                lives: INITIAL_LIVES,
+                last: {
+                    ...this.stats.last,
+                    comboCount: 0,
+                    healCount: 0,
+                    wrongWordsCount: 0,
+                    correctWordsCount: 0,
+                    startTime: null,
+                    endTime: null
+                }
             };
         },
 

@@ -13,7 +13,14 @@
     "score": "Score",
     "combo": "Combo",
     "sound": "Sound",
-    "best": "Best"
+    "best": "Best",
+    "attempt": "Attempt",
+    "heal": "Heal",
+    "wrong": "Wrong",
+    "correct": "Correct",
+    "accuracy": "Accuracy",
+    "duration": "Duration",
+    "results": "Results"
   },
   "game": {
     "title": "⚔️ Typing Game",

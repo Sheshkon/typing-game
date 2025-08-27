@@ -10,10 +10,17 @@
     "play": "Spielen",
     "level": "Level",
     "lives": "Leben",
-    "score": "Punktzahl",
-    "combo": "Kombo",
+    "score": "Punkte",
+    "combo": "Kombination",
     "sound": "Ton",
-    "best": "Bester"
+    "best": "Bestleistung",
+    "attempt": "Versuch",
+    "heal": "Heilen",
+    "wrong": "Falsch",
+    "correct": "Richtig",
+    "accuracy": "Genauigkeit",
+    "duration": "Dauer",
+    "results": "Ergebnisse"
   },
   "game": {
     "title": "⚔️ Tipp-Spiel",

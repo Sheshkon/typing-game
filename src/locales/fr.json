@@ -13,7 +13,14 @@
     "score": "Score",
     "combo": "Combo",
     "sound": "Son",
-    "best": "Meilleur"
+    "best": "Meilleur",
+    "attempt": "Essai",
+    "heal": "Soin",
+    "wrong": "Fautes",
+    "correct": "Correct",
+    "accuracy": "Précision",
+    "duration": "Durée",
+    "results": "Résultats"
   },
   "game": {
     "title": "⚔️ Jeu de frappe",

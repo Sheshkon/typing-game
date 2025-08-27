@@ -1,3 +1,4 @@
+import {ENEMY_SPEED} from '@/constants.js';
 import {EntityBase} from '@/entity/base.js';
 import {playSound, stopSound} from '@/sound/sound.js';
 import {Animation} from '@/types/animation.js';
@@ -17,7 +18,7 @@ export class Enemy extends EntityBase {
         });
         this.id = ++Enemy._id;
         this.word = word;
-        this.speed = 1;
+        this.speed = ENEMY_SPEED;
         this.soundId = null;
         this.isUnderAttack = false;
     }

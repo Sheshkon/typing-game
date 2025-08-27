@@ -98,7 +98,7 @@ onUnmounted(() => restart());
         pageOnly='true'
         class='theme-wrapper fullscreen-mode'
     >
-      <notifications />
+      <notifications dangerouslySetInnerHtml :close-on-click='true'/>
       <div class='game-field'>
         <Stats/>
         <Settings :style='{flexDirection: "row", justifyContent: "center", margin: "0.5rem" }'/>
