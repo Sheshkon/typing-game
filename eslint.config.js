@@ -1,7 +1,7 @@
 import js from '@eslint/js';
-import pluginVue from 'eslint-plugin-vue';
-import importPlugin from 'eslint-plugin-import';
 import { defineConfig } from 'eslint/config';
+import importPlugin from 'eslint-plugin-import';
+import pluginVue from 'eslint-plugin-vue';
 import globals from 'globals';
 
 export default defineConfig([
@@ -25,6 +25,8 @@ export default defineConfig([
             semi: ['error', 'always'],
             'vue/html-quotes': ['error', 'single'],
             'vue/multi-word-component-names': 'off',
+
+            'eol-last': ['error', 'always'],
 
             'sort-imports': ['error', {
                 ignoreCase: true,
