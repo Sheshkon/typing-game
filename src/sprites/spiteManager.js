@@ -1,12 +1,12 @@
-import {sprites} from '@/sprites/config/sprites.js';
-import {resolveAsset} from '@/utils/assets.js';
+import { sprites } from '@/sprites/config/sprites.js';
+import { resolveAsset } from '@/utils/assets.js';
 
-export async function loadSprites() {
+
+export async function loadAssets() {
     const entities = Object.entries(sprites);
 
-
-    await Promise.all(
-        entities.map(async ([entityName, spriteSet]) => {
+    await Promise.all([
+        ...entities.map(async ([entityName, spriteSet]) => {
             await Promise.all(
                 Object.entries(spriteSet).map(([animName, cfg]) =>
                     new Promise((resolve, reject) => {
@@ -16,17 +16,28 @@ export async function loadSprites() {
                             console.log(`✅ Loaded: ${entityName}/${animName}`);
                             resolve();
                         };
-                        img.onerror = () => reject(new Error(`❌ Failed to load ${entityName}/${animName}`));
+                        img.onerror = () =>
+                            reject(new Error(`❌ Failed to load ${entityName}/${animName}`));
                         img.src = resolveAsset(cfg.src);
                     })
                 )
             );
+        }),
+
+        new Promise((resolve, reject) => {
+            const bg = new Image();
+            bg.onload = () => {
+                console.log('✅ Background loaded');
+                resolve();
+            };
+            bg.onerror = () => reject(new Error('❌ Failed to load background'));
+            bg.src = resolveAsset('background-compressed.png');
         })
-    );
+    ]);
 }
 
 export function getSprite(entity, animation, direction = null) {
-    const spriteKey =  direction ? `${animation}_${direction}` : animation;
+    const spriteKey = direction ? `${animation}_${direction}` : animation;
     const cfg = sprites[entity]?.[spriteKey];
     if (!cfg || !cfg.image || !cfg.image.complete) {
         console.warn(`Sprite ${entity}/${spriteKey} not ready`);
@@ -35,5 +46,4 @@ export function getSprite(entity, animation, direction = null) {
     return cfg;
 }
 
-export class getSpriteWithoutDirection {
-}
+export class getSpriteWithoutDirection {}

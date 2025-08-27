@@ -9,7 +9,7 @@ import Stats from '@/components/Stats.vue';
 import {Effect} from '@/entity/effect.js';
 import {TypeController} from '@/logic/attack.js';
 import {LoopController} from '@/logic/loop.js';
-import {loadSprites} from '@/sprites/spiteManager.js';
+import {loadAssets} from '@/sprites/spiteManager.js';
 import {useGameStore} from '@/stores/game';
 import {Animation} from '@/types/animation.js';
 
@@ -39,7 +39,7 @@ function handleEnter(e) {
 }
 
 async function setUp() {
-  await loadSprites();
+  await loadAssets();
   gameStore.effects = {
     [Animation.COMBO]: new Effect(Animation.COMBO),
     [Animation.HEAL]: new Effect(Animation.HEAL)
