@@ -1,5 +1,6 @@
 {
   "language": "Français",
+  "locale": "fr-FR",
   "dark": "Sombre",
   "light": "Clair",
   "specialWords": {
@@ -7,6 +8,8 @@
     "heal": "soin"
   },
   "labels": {
+    "language": "Langue",
+    "start": "Début",
     "play": "Jouer",
     "level": "Niveau",
     "lives": "Vies",

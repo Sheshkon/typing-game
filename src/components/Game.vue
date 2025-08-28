@@ -6,6 +6,8 @@ import {nextTick, onBeforeUnmount, onMounted, onUnmounted, ref, watch} from 'vue
 import {useI18n} from 'vue-i18n';
 
 import Description from '@/components/Description.vue';
+import ExtendedStatistics from '@/components/ExtendedStatistics.vue';
+import Results from '@/components/Results.vue';
 import Rules from '@/components/Rules.vue';
 import Settings from '@/components/Settings.vue';
 import Setup from '@/components/Setup.vue';
@@ -111,22 +113,34 @@ onMounted(async () => {
       <div class='game-field'>
         <Stats/>
         <Settings :style='{flexDirection: "row", justifyContent: "center", margin: "0.5rem" }'/>
-        <canvas ref='canvas' class='battlefield'/>
-        <button class='fullscreen-btn' @click='toggleFullscreen(toggle)'>
-          <Fullscreen/>
-        </button>
-        <input
-            ref='input'
-            v-model='gameStore.input'
-            @keydown='handleKeyDown'
-            :placeholder='t("game.placeholder")'
-            class='typebox'
-            autocomplete='off'
-            autocapitalize='none'
-            spellcheck='false'
-            autofocus
-        />
-        <p class='hint' v-html='t("game.hint")'/>
+        <div class='layout'>
+          <div class='side left'>
+            <ExtendedStatistics/>
+          </div>
+
+          <div class='center'>
+            <canvas ref='canvas' class='battlefield'></canvas>
+            <button class='fullscreen-btn' @click='toggleFullscreen(toggle)'>
+              <Fullscreen/>
+            </button>
+            <input
+                ref='input'
+                v-model='gameStore.input'
+                @keydown='handleKeyDown'
+                :placeholder='t("game.placeholder")'
+                class='typebox theme-wrapper'
+                autocomplete='off'
+                autocapitalize='none'
+                spellcheck='false'
+                autofocus
+            />
+            <p class='hint' v-html='t("game.hint")'/>
+          </div>
+          <div class='side right'>
+            <Results/>
+          </div>
+        </div>
+
       </div>
     </UseFullscreen>
   </div>
@@ -189,5 +203,33 @@ onMounted(async () => {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+}
+
+.layout {
+  align-items: start;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.side {
+  width: 33vw;
+}
+
+.right {
+  padding-right: 4rem;
+}
+
+.left {
+  padding-left: 4rem;
+  padding-top: 1rem;
 }
 </style>

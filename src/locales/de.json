@@ -1,5 +1,6 @@
 {
   "language": "Deutsch",
+  "locale": "de-DE",
   "dark": "Dunkel",
   "light": "Hell",
   "specialWords": {
@@ -7,6 +8,8 @@
     "heal": "heilen"
   },
   "labels": {
+    "language": "Sprache",
+    "start": "Start",
     "play": "Spielen",
     "level": "Level",
     "lives": "Leben",

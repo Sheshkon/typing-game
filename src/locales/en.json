@@ -1,5 +1,6 @@
 {
   "language": "English",
+  "locale": "en-US",
   "dark": "Dark",
   "light": "Light",
   "specialWords": {
@@ -7,6 +8,8 @@
     "heal": "heal"
   },
   "labels": {
+    "language": "Language",
+    "start": "Start",
     "play": "Play",
     "level": "Level",
     "lives": "Lives",

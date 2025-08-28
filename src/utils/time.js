@@ -1,3 +1,6 @@
+import {i18n} from '@/i18n.js';
+import {locales} from '@/locales/locale.js';
+
 export function getFormattedDuration(ms) {
     const totalSeconds = Math.floor(ms / 1000);
     const minutes = Math.floor(totalSeconds / 60);
@@ -11,3 +14,19 @@ export function getFormattedDuration(ms) {
     }
     return `${minutes}m ${seconds}s`;
 }
+
+export function formatDate(dateValue) {
+    const {locale} = locales[i18n.global.locale.value];
+    
+    if (!dateValue) return '';
+    const date = new Date(dateValue);
+
+    return date.toLocaleString(locale, {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+    });
+}
+

@@ -15,16 +15,19 @@
   },
   "dependencies": {
     "@kyvg/vue3-notification": "^3.4.1",
+    "@mdi/font": "^7.4.47",
     "@popperjs/core": "^2.11.8",
     "@vueuse/components": "^13.8.0",
     "@vueuse/core": "^13.8.0",
+    "dexie": "^4.2.0",
     "eslint-plugin-import": "^2.32.0",
     "howler": "^2.2.4",
     "lucide-vue-next": "^0.542.0",
     "pinia": "^3.0.3",
     "vue": "^3.5.18",
     "vue-i18n": "^11.1.11",
-    "vue-select": "^4.0.0-beta.6"
+    "vue-select": "^4.0.0-beta.6",
+    "vuetify": "^3.9.6"
   },
   "devDependencies": {
     "@eslint/js": "^9.34.0",

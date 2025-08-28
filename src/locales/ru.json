@@ -1,5 +1,6 @@
 {
   "language": "Русский",
+  "locale": "ru-RU",
   "dark": "Темная",
   "light": "Светлая",
   "specialWords": {
@@ -7,6 +8,8 @@
     "heal": "лечение"
   },
   "labels": {
+    "language": "Язык",
+    "start": "Старт",
     "play": "Играть",
     "level": "Уровень",
     "lives": "Жизни",

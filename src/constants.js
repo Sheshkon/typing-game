@@ -13,4 +13,4 @@ export const TEXT_ALIGN = 'center';
 export const PROJECTILE_SPEED = 2 * SCALE_FACTOR;
 export const SPAWN_RADIUS = Math.floor(FIELD_SIZE / 2 - 50 * SCALE_FACTOR);
 export const ENEMY_SPEED = 1;
-export const NOTIFICATION_DURATION = -1;
+export const NOTIFICATION_DURATION = 3000;

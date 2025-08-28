@@ -1,5 +1,7 @@
 import {notify} from '@kyvg/vue3-notification';
 
+import {useExtendedStats} from '@/composables/useExtendedStats.js';
+import {useGameResults} from '@/composables/useGameResults.js';
 import {NOTIFICATION_DURATION} from '@/constants.js';
 import {i18n} from '@/i18n.js';
 import {locales} from '@/locales/locale.js';
@@ -8,9 +10,10 @@ import {MoveController} from '@/logic/move.js';
 import {Spawner} from '@/logic/spawn.js';
 import {stopSound} from '@/sound/sound.js';
 import {useGameStore} from '@/stores/game.js';
-import {getFormattedDuration} from '@/utils/time.js';
+import {GameResultsRepo} from '@/stores/repository.js';
 
-const getLabels = () => locales[i18n.global.locale.value].labels;
+const {fetchData: updateGameResults} = useGameResults();
+const {fetchStats: updateExtendedStats} = useExtendedStats();
 
 export class LoopController {
     constructor(ctx) {
@@ -32,18 +35,11 @@ export class LoopController {
         this.stop();
         this.lastTime = performance.now();
         this.isRunning = true;
-
         this.gameLoopId = requestAnimationFrame(() => this.gameLoop());
         this.animLoopId = requestAnimationFrame(() => this.animLoop());
         this.spawnLoop();
         this.gameStore.stats.last.startTime = Date.now();
         this.gameStore.stats.last.attempt++;
-    }
-
-    spawnLoop() {
-        this.spawner.spawnEnemy();
-        const delay = this.gameStore.levelConfig.spawnInterval;
-        this.spawnTimerId = setTimeout(() => this.spawnLoop(), delay);
     }
 
     stop() {
@@ -55,52 +51,26 @@ export class LoopController {
         this.isRunning = false;
     }
 
-    gameLoop() {
+    spawnLoop() {
+        this.spawner.spawnEnemy();
+        const delay = this.gameStore.levelConfig.spawnInterval;
+        this.spawnTimerId = setTimeout(() => this.spawnLoop(), delay);
+    }
+
+    async gameLoop() {
         if (!this.isRunning) return;
         if (this.gameStore.gameOver) {
             stopSound();
             this.stop();
             this.gameStore.stats.last.endTime = Date.now();
-            this.#notifyGameOver(this.gameStore.stats);
+            await this.#handleResult();
             this.gameStore.resetGame();
             this.start();
             this.gameStore.gameOver = false;
             return;
         }
         this.moveController.update(this.gameStore);
-        this.gameLoopId = requestAnimationFrame(() => this.gameLoop());
-    }
-
-    #notifyGameOver(stats) {
-        const labels = getLabels();
-        const msg = this.#buildGameOverNotificationMessage(stats, labels);
-        console.log(msg);
-        notify({
-            type:  this.gameStore.stats.last.attempt % 2 ? 'warn' : 'success',
-            duration: NOTIFICATION_DURATION,
-            title: labels.results,
-            text: msg,
-        });
-    }
-
-    #buildGameOverNotificationMessage(stats, labels) {
-        const accuracy = this.#getAccuracy(stats);
-        const duration = getFormattedDuration(stats.last.endTime - stats.last.startTime);
-
-        return `
-            <b>${labels.attempt}:</b> #${stats.last.attempt}<br>
-            <b>${labels.score}:</b> ${stats.score}<br>
-            <b>${labels.combo}:</b> ${stats.last.comboCount}<br>
-            <b>${labels.heal}:</b> ${stats.last.healCount}<br>
-            <b>${labels.wrong}:</b> ${stats.last.wrongWordsCount}<br>
-            <b>${labels.correct}:</b> ${stats.last.correctWordsCount}<br>
-            <b>${labels.accuracy}:</b> ${accuracy}%<br>
-            <b>${labels.duration}:</b> ${duration}<br>
-    `;
-    }
-
-    #getAccuracy(stats) {
-        return Math.floor(stats.last.correctWordsCount / (stats.last.wrongWordsCount + stats.last.correctWordsCount) * 100);
+        this.gameLoopId = requestAnimationFrame(async () => await this.gameLoop());
     }
 
     animLoop() {
@@ -110,10 +80,57 @@ export class LoopController {
         this.animLoopId = requestAnimationFrame(() => this.animLoop());
     }
 
+    async #handleResult() {
+        const {stats, level} = this.gameStore;
+        const {labels, language} = locales[i18n.global.locale.value];
+        if (stats.score <= 0) {
+            this.#notify(`<b>${labels.score}:</b> ${stats.score}<br>`, labels);
+            return;
+        }
+        const result = await GameResultsRepo.save(stats, language, {level});
+        this.#sendResultNotification(result, labels);
+        await this.#updateData();
+    }
+
     #getDelta() {
         const now = performance.now();
         const delta = now - this.lastTime;
         this.lastTime = now;
         return delta;
+    }
+
+    #sendResultNotification(result, labels) {
+        const msg = this.#buildGameOverNotificationMessage(result, labels);
+        this.#notify(msg, labels);
+    }
+
+    #notify(msg, labels) {
+        console.log(msg);
+        notify({
+            type: this.gameStore.stats.last.attempt % 2 ? 'warn' : 'success',
+            duration: NOTIFICATION_DURATION,
+            title: labels.results,
+            text: msg,
+        });
+    }
+
+    #buildGameOverNotificationMessage(result, labels) {
+        return `<b>${labels.score}:</b> ${result.score}<br>`;
+        //     return `
+        //         <b>${result.language}</b><br>
+        //         <b>${result.attempt}:</b> #${result.attempt}<br>
+        //         <b>${labels.score}:</b> ${result.score}<br>
+        //         <b>${labels.combo}:</b> ${result.comboCount}<br>
+        //         <b>${labels.heal}:</b> ${result.healCount}<br>
+        //         <b>${labels.wrong}:</b> ${result.wrongWordsCount}<br>
+        //         <b>${labels.correct}:</b> ${result.correctWordsCount}<br>
+        //         <b>${labels.accuracy}:</b> ${result.accuracy}%<br>
+        //         <b>${labels.duration}:</b> ${result.duration}<br>
+        // `;
+    }
+
+    async #updateData() {
+        await updateGameResults();
+        await updateExtendedStats();
     }
 }
