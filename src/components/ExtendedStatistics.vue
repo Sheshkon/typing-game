@@ -1,46 +1,45 @@
 <script setup>
-import {useExtendedStats} from '@/composables/useExtendedStats';
-import {getFormattedDuration} from '@/utils/time.js';
+import { useI18n } from 'vue-i18n';
 
-const {totalWords, totalDuration, languagePercentages, maxLevel} = useExtendedStats();
+import { useExtendedStats } from '@/composables/useExtendedStats';
+import { getFormattedDuration } from '@/utils/time.js';
+
+const { t } = useI18n();
+const { totalWords, totalDuration, languagePercentages, maxLevel } = useExtendedStats();
 </script>
 
 <template>
   <div v-show='totalDuration > 0' class='extended-stats'>
-    <div class='title'>Extended Statistics</div>
+    <div class='title'>{{ t('stats.extended') }}</div>
 
     <div class='stat-row'>
-      <div class='label'>Total Words</div>
+      <div class='label'>{{ t('stats.totalWords') }}</div>
       <div class='value'>{{ totalWords }}</div>
     </div>
 
     <div class='stat-row'>
-      <div class='label'>Total Duration</div>
+      <div class='label'>{{ t('stats.totalDuration') }}</div>
       <div class='value'>{{ getFormattedDuration(totalDuration) }}</div>
     </div>
 
     <div class='stat-row'>
-      <div class='label'>Max Level</div>
+      <div class='label'>{{ t('stats.maxLevel') }}</div>
       <div class='value'>{{ maxLevel }}</div>
     </div>
 
-
     <div class='lang-table'>
       <div class='lang-header'>
-        <div class='lang-cell'>Language</div>
-        <div class='lang-cell'>Percent</div>
+        <div class='lang-cell'>{{ t('stats.language') }}</div>
+        <div class='lang-cell'>{{ t('stats.percent') }}</div>
       </div>
-      <div
-          class='lang-row'
-          v-for='l in languagePercentages'
-          :key='l.language'
-      >
+      <div class='lang-row' v-for='l in languagePercentages' :key='l.language'>
         <div class='lang-cell'>{{ l.language }}</div>
         <div class='lang-cell'>{{ l.percent }}%</div>
       </div>
     </div>
   </div>
 </template>
+
 
 <style scoped>
 .extended-stats {

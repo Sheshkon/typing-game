@@ -48,5 +48,13 @@
       "Wort „kombo“ — zerstört alle Feinde in der Umgebung. Kosten: {combo} Kombopunkte.",
       "Wort „heilen“ — stellt 1 Leben wieder her. Kosten: {heal} Kombopunkte."
     ]
+  },
+  "stats": {
+    "extended": "Erweiterte Statistiken",
+    "totalWords": "Gesamtanzahl Wörter",
+    "totalDuration": "Gesamtdauer",
+    "maxLevel": "Maximales Level",
+    "language": "Sprache",
+    "percent": "Prozent"
   }
 }

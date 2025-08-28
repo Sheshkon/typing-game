@@ -48,5 +48,13 @@
       "Word \"combo\" — destroys all enemies around. Cost: {combo} combo points.",
       "Word \"heal\" — restores 1 life. Cost: {heal} combo points."
     ]
+  },
+  "stats": {
+    "extended": "Extended Statistics",
+    "totalWords": "Total Words",
+    "totalDuration": "Total Duration",
+    "maxLevel": "Max Level",
+    "language": "Language",
+    "percent": "Percent"
   }
 }

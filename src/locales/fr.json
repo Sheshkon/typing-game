@@ -48,5 +48,13 @@
       "Mot «combo» — détruit tous les ennemis autour. Coût : {combo} points de combo.",
       "Mot «soin» — restaure 1 vie. Coût : {heal} points de combo."
     ]
+  },
+  "stats": {
+    "extended": "Statistiques détaillées",
+    "totalWords": "Nombre total de mots",
+    "totalDuration": "Durée totale",
+    "maxLevel": "Niveau maximum",
+    "language": "Langue",
+    "percent": "Pourcentage"
   }
 }
