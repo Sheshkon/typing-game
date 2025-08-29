@@ -10,7 +10,7 @@ const { totalWords, totalDuration, languagePercentages, maxLevel } = useExtended
 
 <template>
   <div v-show='totalDuration > 0' class='extended-stats'>
-    <div class='title'>{{ t('stats.extended') }}</div>
+<!--    <div class='title'>{{ t('stats.extended') }}</div>-->
 
     <div class='stat-row'>
       <div class='label'>{{ t('stats.totalWords') }}</div>
@@ -40,21 +40,21 @@ const { totalWords, totalDuration, languagePercentages, maxLevel } = useExtended
   </div>
 </template>
 
-
 <style scoped>
 .extended-stats {
   font-size: 14px;
+  padding-top: 2.5rem;
 }
 
 .title {
   font-weight: bold;
-  margin-bottom: 8px;
+  margin-bottom: 0.5rem;
 }
 
 .stat-row {
   display: flex;
   justify-content: space-between;
-  padding: 2px 0;
+  padding: 0 0.1rem;
 }
 
 .value {
@@ -62,6 +62,7 @@ const { totalWords, totalDuration, languagePercentages, maxLevel } = useExtended
 }
 
 .lang-table {
+  padding-top: 1rem;
   display: flex;
   flex-direction: column;
 }
@@ -69,16 +70,20 @@ const { totalWords, totalDuration, languagePercentages, maxLevel } = useExtended
 .lang-header {
   display: flex;
   font-weight: bold;
-  border-bottom: 1px solid #ccc;
 }
 
 .lang-row {
   display: flex;
   border-bottom: 1px solid #eee;
+  padding: 0 0.1rem;
 }
 
 .lang-cell {
   flex: 1;
-  padding: 2px 0;
+  padding: 0.1rem 0;
+}
+
+.label {
+  padding-right: 1rem;
 }
 </style>

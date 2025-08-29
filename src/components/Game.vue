@@ -149,21 +149,51 @@ onMounted(async () => {
 <style>
 .game {
   display: flex;
-  align-items: center;
   flex-direction: column;
+  align-items: center;
   margin: 0 auto;
   padding: 1rem;
   border-radius: 1rem;
 }
 
+.layout {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 2rem;
+  align-items: start;
+  justify-items: center;
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.side {
+  min-width: 200px;
+  max-width: 300px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.left,
+.right {
+  display: flex;
+  justify-content: center;
+}
+
+.center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .battlefield {
   display: block;
   border: 2px solid #111;
-  margin: 0 auto 12px;
   background-image: url('@/assets/background-compressed.png');
   background-size: cover;
-  width: calc(min(50vh, 50vw)) !important;
   height: auto !important;
+  border-radius: 1rem;
 }
 
 .typebox {
@@ -171,12 +201,12 @@ onMounted(async () => {
   font-size: 18px;
   padding: 10px;
   border: 2px solid #111;
-  border-radius: 12px;
+  border-radius: 1rem;
   color: black;
 }
 
 .hint {
-  text-align: center
+  text-align: center;
 }
 
 .fullscreen-btn {
@@ -192,44 +222,16 @@ onMounted(async () => {
 }
 
 .fullscreen-mode:fullscreen canvas.battlefield {
-  height: calc(min(100vh - 14rem, 100vw - 14rem)) !important;
-  width: auto !important;
+  width: calc(min(100vh - 15rem, 100vw - 15rem)) !important;
+  height: auto !important;
   display: block;
   margin: 0 auto;
 }
 
 .game-field {
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
-}
-
-.layout {
-  align-items: start;
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-}
-
-.center {
-  flex: 1;
-  display: flex;
-  justify-content: center;
   align-items: center;
-  flex-direction: column;
 }
 
-.side {
-  width: 33vw;
-}
-
-.right {
-  padding-right: 4rem;
-}
-
-.left {
-  padding-left: 4rem;
-  padding-top: 1rem;
-}
 </style>
