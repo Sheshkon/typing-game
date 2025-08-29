@@ -4,11 +4,11 @@ export const LEVELS_COUNT = 7;
 
 const baseConfig = {
     1: {spawnInterval: 800, scoresPerAction: 5},
-    2: {spawnInterval: 1500, scoresPerAction: 5},
-    3: {spawnInterval: 2000, scoresPerAction: 10},
-    4: {spawnInterval: 2200, scoresPerAction: 12},
-    5: {spawnInterval: 2400, scoresPerAction: 15},
-    6: {spawnInterval: 2600, scoresPerAction: 18},
+    2: {spawnInterval: 900, scoresPerAction: 5},
+    3: {spawnInterval: 1200, scoresPerAction: 10},
+    4: {spawnInterval: 1500, scoresPerAction: 12},
+    5: {spawnInterval: 2000, scoresPerAction: 15},
+    6: {spawnInterval: 2500, scoresPerAction: 18},
     7: {spawnInterval: 2800, scoresPerAction: 20},
     default: {spawnInterval: 3000, scoresPerAction: 25}
 };
