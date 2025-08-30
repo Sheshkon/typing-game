@@ -14,8 +14,10 @@
     "lint": "npx eslint \"src/**/*.{js,vue}\" --fix"
   },
   "dependencies": {
+    "@jamescoyle/vue-icon": "^0.1.2",
     "@kyvg/vue3-notification": "^3.4.1",
     "@mdi/font": "^7.4.47",
+    "@mdi/js": "^7.4.47",
     "@popperjs/core": "^2.11.8",
     "@vueuse/components": "^13.8.0",
     "@vueuse/core": "^13.8.0",

@@ -8,9 +8,9 @@ const baseConfig = {
     3: {spawnInterval: 1200, scoresPerAction: 10},
     4: {spawnInterval: 1500, scoresPerAction: 12},
     5: {spawnInterval: 2000, scoresPerAction: 15},
-    6: {spawnInterval: 2500, scoresPerAction: 18},
-    7: {spawnInterval: 2800, scoresPerAction: 20},
-    default: {spawnInterval: 3000, scoresPerAction: 25}
+    6: {spawnInterval: 2100, scoresPerAction: 18},
+    7: {spawnInterval: 2200, scoresPerAction: 20},
+    default: {spawnInterval: 2300, scoresPerAction: 25}
 };
 
 const modules = import.meta.glob('./*.js', { eager: true });

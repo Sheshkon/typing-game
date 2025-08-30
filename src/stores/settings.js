@@ -11,6 +11,14 @@ export const useSettingsStore = defineStore('settings', () => {
     const language = ref(localStorage.getItem('language') ?? Language.EN);
     const theme = ref(localStorage.getItem('theme') ?? Theme.Light);
 
+    function toggleTheme() {
+        theme.value = (theme.value === Theme.Dark) ? Theme.Light : Theme.Dark;
+    }
+
+    function toggleSound() {
+        isSoundEnabled.value = !isSoundEnabled.value;
+    }
+
     watch(theme, (newTheme) => {
         localStorage.setItem('theme', newTheme);
                document.querySelectorAll('.theme-wrapper').forEach(el => {
@@ -31,7 +39,9 @@ export const useSettingsStore = defineStore('settings', () => {
     return {
         isSoundEnabled,
         language,
-        theme
+        theme,
+        toggleTheme,
+        toggleSound
     };
 });
 

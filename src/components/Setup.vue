@@ -67,25 +67,21 @@ function withPopper(dropdownList, component, {width}) {
 <style>
 .game-setup {
   display: flex;
-  /* justify-content: center; */
-  align-items: start;
+  align-items: center;
+  justify-content: center;
   gap: 0.5rem;
-  margin-top: 1rem;
 }
 
 .start-btn {
   border: none;
-  padding: 0.3rem 1.2rem;
+  padding: 0.25rem 1.2rem 0.3rem;
   font-size: 1rem;
   font-weight: bold;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   cursor: pointer;
-  background: none;
-}
-
-.start-btn:hover {
   background: linear-gradient(135deg, #7bff00, #dc2626);
 }
+
 
 .start-btn:active {
   transform: scale(0.96);
