@@ -7,6 +7,7 @@
     "combo": "kombo",
     "heal": "heilen"
   },
+  "gameOver": "Spiel Vorbei!",
   "labels": {
     "language": "Sprache",
     "start": "Start",
@@ -23,7 +24,8 @@
     "correct": "Richtig",
     "accuracy": "Genauigkeit",
     "duration": "Dauer",
-    "results": "Ergebnisse"
+    "results": "Ergebnisse",
+    "restart": "Neustart"
   },
   "game": {
     "title": "⚔️ Tipp-Spiel",

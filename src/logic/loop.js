@@ -51,8 +51,15 @@ export class LoopController {
         this.isRunning = false;
     }
 
+    restart() {
+        this.stop();
+        this.gameStore.resetGame();
+        this.start();
+        this.gameStore.gameOver = false;
+    }
+
     spawnLoop() {
-        this.spawner.spawnEnemy();
+        if(!this.gameStore.gameOver) this.spawner.spawnEnemy();
         const delay = this.gameStore.levelConfig.spawnInterval;
         this.spawnTimerId = setTimeout(() => this.spawnLoop(), delay);
     }
@@ -61,12 +68,8 @@ export class LoopController {
         if (!this.isRunning) return;
         if (this.gameStore.gameOver) {
             stopSound();
-            this.stop();
             this.gameStore.stats.last.endTime = Date.now();
             await this.#handleResult();
-            this.gameStore.resetGame();
-            this.start();
-            this.gameStore.gameOver = false;
             return;
         }
         this.moveController.update(this.gameStore);

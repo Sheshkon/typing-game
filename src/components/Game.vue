@@ -65,11 +65,16 @@ async function setUp() {
   setupCanvas();
 }
 
-async function restart() {
+async function start() {
   loopController.stop();
   gameStarted.value = true;
   await nextTick(() => input.value.focus());
   loopController.start();
+}
+
+async function restart() {
+  loopController.restart();
+  await nextTick(() => input.value.focus());
 }
 
 watch(() => gameStore.input, (newValue) => {
@@ -83,7 +88,7 @@ watch(() => gameStore.input, (newValue) => {
 });
 
 onUnmounted(() => {
-  restart();
+  start();
 });
 
 onBeforeUnmount(() => window.removeEventListener('keydown', handleKeyDown));
@@ -98,7 +103,7 @@ onMounted(async () => {
 <template>
   <div class='game'>
     <h1>{{ t('game.title') }}</h1>
-    <Setup v-show='!gameStarted' :on-action='restart'/>
+    <Setup v-show='!gameStarted' :on-action='start'/>
     <Description/>
     <Rules/>
 
@@ -119,6 +124,13 @@ onMounted(async () => {
           </div>
 
           <div class='center'>
+            <button
+                class='restart-btn'
+                v-show='gameStore.gameOver'
+                @click='restart'
+            >
+              {{ t('labels.restart') }}
+            </button>
             <canvas ref='canvas' class='battlefield'></canvas>
             <button class='fullscreen-btn' @click='toggleFullscreen(toggle)'>
               <Fullscreen/>
@@ -185,6 +197,7 @@ onMounted(async () => {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  position: relative;
 }
 
 .battlefield {
@@ -232,6 +245,18 @@ onMounted(async () => {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.restart-btn {
+  position: absolute;
+  border: none;
+  padding: 0.25rem 1.2rem 0.3rem;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  color: black;
+  background: linear-gradient(135deg, #7bff00, #dc2626);
 }
 
 </style>

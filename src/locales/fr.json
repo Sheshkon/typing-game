@@ -7,6 +7,7 @@
     "combo": "combo",
     "heal": "soin"
   },
+  "gameOver": "Partie Terminée!",
   "labels": {
     "language": "Langue",
     "start": "Début",
@@ -23,7 +24,8 @@
     "correct": "Correct",
     "accuracy": "Précision",
     "duration": "Durée",
-    "results": "Résultats"
+    "results": "Résultats",
+    "restart": "Redémarrer"
   },
   "game": {
     "title": "⚔️ Jeu de frappe",
