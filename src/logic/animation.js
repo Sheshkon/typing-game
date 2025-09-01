@@ -1,4 +1,6 @@
 import {COLLISION_ATTACK, TEXT_ALIGN, TEXT_COLOR, TEXT_FONT} from '@/constants.js';
+import {i18n} from '@/i18n.js';
+import {locales} from '@/locales/locale.js';
 import {getSprite} from '@/sprites/spiteManager.js';
 import {useGameStore} from '@/stores/game.js';
 import {Animation} from '@/types/animation.js';
@@ -29,6 +31,7 @@ export class AnimationController {
             .filter(e => e.isEnabled && e?.sprite)
             .forEach(e => this.#drawEffect(e.sprite));
         entities.forEach(e => this.#drawEntity(e));
+        this.#drawGameOver();
     }
 
     #updateEffect(effect, delta) {
@@ -91,7 +94,7 @@ export class AnimationController {
                         }
                     }
                 }
-                if(sprite.entity === Entity.PLAYER) {
+                if (sprite.entity === Entity.PLAYER) {
                     entity.updateAnimation(Animation.IDLE);
                     this.gameStore.leftActiveAim();
                 }
@@ -126,6 +129,23 @@ export class AnimationController {
             this.ctx.textAlign = TEXT_ALIGN;
             this.ctx.fillText(entity.word, 0, -height / 2);
         }
+        this.ctx.restore();
+    }
+
+    #drawGameOver() {
+        if (!this.gameStore.gameOver) return;
+
+        const {player} = this.gameStore;
+
+        this.ctx.save();
+        this.ctx.translate(player.x, player.y);
+        this.ctx.fillStyle = TEXT_COLOR;
+        this.ctx.scale(8, 8);
+        this.ctx.font = TEXT_FONT;
+        this.ctx.textAlign = TEXT_ALIGN;
+
+        const gameOverText = locales[i18n.global.locale.value].gameOver;
+        this.ctx.fillText(gameOverText, 0, -20);
         this.ctx.restore();
     }
 }

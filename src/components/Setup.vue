@@ -82,7 +82,6 @@ function withPopper(dropdownList, component, {width}) {
   background: linear-gradient(135deg, #7bff00, #dc2626);
 }
 
-
 .start-btn:active {
   transform: scale(0.96);
 }
