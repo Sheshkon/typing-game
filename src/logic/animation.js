@@ -1,4 +1,12 @@
-import {COLLISION_ATTACK, TEXT_ALIGN, TEXT_COLOR, TEXT_FONT} from '@/constants.js';
+import {
+    BLUR_FILTER,
+    COLLISION_ATTACK,
+    GAME_OVER_SCALE_FACTOR,
+    NO_FILTER,
+    TEXT_ALIGN,
+    TEXT_COLOR,
+    TEXT_FONT
+} from '@/constants.js';
 import {i18n} from '@/i18n.js';
 import {locales} from '@/locales/locale.js';
 import {getSprite} from '@/sprites/spiteManager.js';
@@ -9,6 +17,9 @@ import {Entity} from '@/types/entity.js';
 export class AnimationController {
     constructor(ctx) {
         this.ctx = ctx;
+        this.ctx.textAlign = TEXT_ALIGN;
+        this.ctx.font = TEXT_FONT;
+        this.ctx.fillStyle = TEXT_COLOR;
         this.gameStore = useGameStore();
     }
 
@@ -124,26 +135,23 @@ export class AnimationController {
         );
 
         if (entity.word) {
-            this.ctx.fillStyle = TEXT_COLOR;
-            this.ctx.font = TEXT_FONT;
-            this.ctx.textAlign = TEXT_ALIGN;
             this.ctx.fillText(entity.word, 0, -height / 2);
         }
         this.ctx.restore();
     }
 
     #drawGameOver() {
-        if (!this.gameStore.gameOver) return;
+        if (!this.gameStore.gameOver) {
+            this.ctx.filter = NO_FILTER;
+            return;
+        }
 
         const {player} = this.gameStore;
-
+        this.ctx.filter = BLUR_FILTER;
         this.ctx.save();
+        this.ctx.filter = NO_FILTER;
         this.ctx.translate(player.x, player.y);
-        this.ctx.fillStyle = TEXT_COLOR;
-        this.ctx.scale(8, 8);
-        this.ctx.font = TEXT_FONT;
-        this.ctx.textAlign = TEXT_ALIGN;
-
+        this.ctx.scale(GAME_OVER_SCALE_FACTOR, GAME_OVER_SCALE_FACTOR);
         const gameOverText = locales[i18n.global.locale.value].gameOver;
         this.ctx.fillText(gameOverText, 0, -20);
         this.ctx.restore();
