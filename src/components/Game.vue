@@ -7,6 +7,7 @@ import {useI18n} from 'vue-i18n';
 
 import Description from '@/components/Description.vue';
 import ExtendedStatistics from '@/components/ExtendedStatistics.vue';
+import GameSync from '@/components/MultiplayerMode.vue';
 import Results from '@/components/Results.vue';
 import Rules from '@/components/Rules.vue';
 import Settings from '@/components/Settings.vue';
@@ -25,6 +26,8 @@ const canvas = ref(null);
 const ctx = ref(null);
 const input = ref(null);
 const gameStarted = ref(false);
+
+const multiplayerMode = ref(null);
 
 let loopController = null;
 let typeController = new TypeController();
@@ -67,6 +70,7 @@ async function setUp() {
 
 async function start() {
   loopController.stop();
+  multiplayerMode.value.startSync();
   gameStarted.value = true;
   await nextTick(() => input.value.focus());
   loopController.start();
@@ -101,6 +105,7 @@ onMounted(async () => {
 </script>
 
 <template>
+  <GameSync ref='multiplayerMode'/>
   <div class='game'>
     <h1>{{ t('game.title') }}</h1>
     <Setup v-show='!gameStarted' :on-action='start'/>

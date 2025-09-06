@@ -43,6 +43,7 @@ export class AnimationController {
             .forEach(e => this.#drawEffect(e.sprite));
         entities.forEach(e => this.#drawEntity(e));
         this.#drawGameOver();
+        this.#drawMultiplayer();
     }
 
     #updateEffect(effect, delta) {
@@ -138,6 +139,18 @@ export class AnimationController {
             this.ctx.fillText(entity.word, 0, -height / 2);
         }
         this.ctx.restore();
+    }
+
+    #drawMultiplayer() {
+        if (!this.gameStore.opponentIsReady) {
+            const {player} = this.gameStore;
+            this.ctx.save();
+            this.ctx.translate(player.x, player.y);
+            this.ctx.scale(GAME_OVER_SCALE_FACTOR, GAME_OVER_SCALE_FACTOR);
+            const gameOverText = 'Waiting opponent';
+            this.ctx.fillText(gameOverText, 0, -20);
+            this.ctx.restore();
+        }
     }
 
     #drawGameOver() {

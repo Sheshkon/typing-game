@@ -37,7 +37,10 @@ export const useGameStore = defineStore('gameStore', {
         },
         gameOver: false,
         input: '',
-        startLevel: Number(localStorage.getItem('startLevel')) || 1
+        startLevel: Number(localStorage.getItem('startLevel')) || 1,
+        isMultiplayer: false,
+        isReady: false,
+        opponentIsReady: false
     }),
 
     getters: {
@@ -46,6 +49,7 @@ export const useGameStore = defineStore('gameStore', {
         level: state => Math.floor(state.stats.score / 100) + state.startLevel,
         levelConfig: state => getConfig(i18n.global.locale.value, state.level),
         specialWords: () => locales[i18n.global.locale.value].specialWords,
+        isReadyForMultiplayer: state => !state.isMultiplayer || state.opponentIsReady
     },
 
     actions: {
@@ -88,11 +92,16 @@ export const useGameStore = defineStore('gameStore', {
             };
         },
 
-        updateScore(){
+        updateScore() {
             this.stats.score += this.levelConfig.scoresPerAction;
             if (this.stats.score > this.stats.pb) {
                 this.stats.pb = this.stats.score;
             }
         },
+
+        toggleMultiplayer() {
+            this.isMultiplayer = !this.isMultiplayer;
+            console.log('fsdf');
+        }
     }
 });

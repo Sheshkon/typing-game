@@ -59,20 +59,28 @@ export class LoopController {
     }
 
     spawnLoop() {
-        if(!this.gameStore.gameOver) this.spawner.spawnEnemy();
+        if (!this.gameStore.gameOver && this.gameStore.isReadyForMultiplayer) {
+            this.spawner.spawnEnemy();
+        }
         const delay = this.gameStore.levelConfig.spawnInterval;
         this.spawnTimerId = setTimeout(() => this.spawnLoop(), delay);
     }
 
     async gameLoop() {
+
         if (!this.isRunning) return;
+
         if (this.gameStore.gameOver) {
             stopSound();
             this.gameStore.stats.last.endTime = Date.now();
             await this.#handleResult();
             return;
         }
-        this.moveController.update(this.gameStore);
+
+        if (this.gameStore.isReadyForMultiplayer) {
+            this.moveController.update(this.gameStore);
+        }
+
         this.gameLoopId = requestAnimationFrame(async () => await this.gameLoop());
     }
 
