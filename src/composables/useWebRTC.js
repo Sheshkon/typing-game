@@ -172,7 +172,7 @@ export function useWebRTC(initialRoomId, onMessage) {
         }
     }
 
-    function startAutoSend(intervalMs = 50, payloadFn) {
+    function startAutoSend(intervalMs = 100, payloadFn) {
         stopAutoSend();
         sendTimer = setInterval(() => {
             if (channel?.readyState === 'open') {
