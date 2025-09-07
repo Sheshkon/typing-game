@@ -1,6 +1,15 @@
+Got it. Here is the updated README with the correction that multiplayer is only available via a shared link.
+
 # Typing Game
 
 This is a fun and interactive typing game built with Vue.js. Test and improve your typing speed and accuracy as you progress through various levels.
+
+<p align="center">
+<img width="839" alt="Game Screenshot 1" src="https://github.com/user-attachments/assets/187f81a9-9f2f-43d6-8b17-1d09235e97b4">
+</p>
+<p align="center">
+<img width="1919" alt="Game Screenshot 2" src="https://github.com/user-attachments/assets/5faeba00-e568-468a-afed-16074fd4243c">
+</p>
 
 ## Description
 
@@ -9,6 +18,9 @@ The Typing Game challenges players to type a sequence of words that appear on th
 ## Features
 
 *   **Multiple Levels:** Progress through different levels with varying word lengths and speeds.
+*   **Multiplayer Mode:** Challenge a friend in a real-time typing race. You can create a private game room and share a unique link with your opponent to start the competition.
+*   **Multiple Languages:** English, French, Germany, Russian.
+*   **Advanced Game Statistics:** Track your performance with detailed statistics. 
 *   **Sound Effects:** Audio cues for successful and unsuccessful keystrokes.
 *   **Interactive Sprites:** Visual elements that make the game more engaging.
 *   **Reactive UI:** Built with Vue.js for a smooth and responsive user experience.
@@ -16,7 +28,9 @@ The Typing Game challenges players to type a sequence of words that appear on th
 
 ## Getting Started
 
-To get a local copy up and running, follow these simple steps.
+Try: https://sheshkon.github.io/typing-game/
+
+Or get a local copy up and running, follow these simple steps.
 
 ### Prerequisites
 
