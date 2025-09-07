@@ -53,7 +53,7 @@ async function createRoomForOpponent() {
 function startSendDataToOpponent() {
   if (gameStore.isMultiplayer) {
     gameStore.isReady = true;
-    startAutoSend(100, () => gameStore);
+    startAutoSend(50, () => gameStore);
   }
 }
 
