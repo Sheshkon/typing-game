@@ -36,7 +36,6 @@ async function cleanupRoom(roomId) {
 }
 
 export function useWebRTC(initialRoomId, onMessage) {
-    const status = ref('Waiting for opponent');
     const inviteLink = ref(null);
     const gameStore = useGameStore();
 
@@ -69,7 +68,6 @@ export function useWebRTC(initialRoomId, onMessage) {
         };
 
         pc.onconnectionstatechange = async () => {
-            status.value = pc.connectionState;
             gameStore.connectionStatus = pc.connectionState;
             if (pc.connectionState === 'connected') {
                 gameStore.isMultiplayer = true;
@@ -83,7 +81,9 @@ export function useWebRTC(initialRoomId, onMessage) {
     }
 
     function setupChannel() {
-        channel.onopen = () => (status.value = 'connected');
+        channel.onopen = () => {
+            gameStore.connectionStatus = 'connected';
+        };
         channel.onmessage = e => {
             try {
                 const data = JSON.parse(e.data);
@@ -93,7 +93,7 @@ export function useWebRTC(initialRoomId, onMessage) {
             }
         };
         channel.onclose = () => {
-            status.value = 'closed';
+            gameStore.connectionStatus = 'closed';
             stopAutoSend();
         };
     }
@@ -200,7 +200,7 @@ export function useWebRTC(initialRoomId, onMessage) {
                 console.warn('error with close connection');
             }
         }
-        status.value = 'Waiting for opponent';
+        gameStore.connectionStatus = 'Waiting for opponent';
         return await createRoom();
     }
 
@@ -209,7 +209,6 @@ export function useWebRTC(initialRoomId, onMessage) {
     });
 
     return {
-        status,
         inviteLink,
         createRoom,
         joinRoom,
