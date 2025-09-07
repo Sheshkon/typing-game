@@ -1,9 +1,7 @@
 import {defineStore} from 'pinia';
 
 import {FIELD_SIZE, INITIAL_LIVES, VISIBLE_SIZE} from '@/constants.js';
-import {Enemy} from '@/entity/enemy.js';
 import {Player} from '@/entity/player.js';
-import {Projectile} from '@/entity/projectile.js';
 import {i18n} from '@/i18n.js';
 import {getConfig} from '@/level/config.js';
 import {locales} from '@/locales/locale.js';
@@ -17,9 +15,9 @@ export const useGameStore = defineStore('gameStore', {
             vh: VISIBLE_SIZE
         },
         player: new Player(FIELD_SIZE / 2, FIELD_SIZE / 2),
-        enemies: [Enemy],
+        enemies: [],
         effects: {},
-        projectiles: [Projectile],
+        projectiles: [],
         stats: {
             score: 0,
             combo: 0,
@@ -40,7 +38,12 @@ export const useGameStore = defineStore('gameStore', {
         startLevel: Number(localStorage.getItem('startLevel')) || 1,
         isMultiplayer: false,
         isReady: false,
-        opponentIsReady: false
+        opponentIsReady: false,
+        multiplayerBestScore: 0,
+        opponentBestScore: 0,
+        opponentCurrentScore: 0,
+        room: null,
+        connectionStatus: null
     }),
 
     getters: {
@@ -88,7 +91,15 @@ export const useGameStore = defineStore('gameStore', {
                     correctWordsCount: 0,
                     startTime: null,
                     endTime: null
-                }
+                },
+                isMultiplayer: this.isMultiplayer,
+                isReady: this.isReady,
+                opponentIsReady: this.opponentIsReady,
+                multiplayerBestScore: this.multiplayerBestScore,
+                opponentBestScore: this.opponentBestScore,
+                opponentCurrentScore: this.opponentCurrentScore,
+                room: this.room,
+                connectionStatus: this.connectionStatus
             };
         },
 
@@ -101,7 +112,6 @@ export const useGameStore = defineStore('gameStore', {
 
         toggleMultiplayer() {
             this.isMultiplayer = !this.isMultiplayer;
-            console.log('fsdf');
         }
     }
 });

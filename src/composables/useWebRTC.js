@@ -13,6 +13,7 @@ import {
 import {ref} from 'vue';
 
 import {firebaseConfig} from '@/composables/config.js';
+import {gameStringify} from '@/serializer/serializer.js';
 import {useGameStore} from '@/stores/game.js';
 
 const app = initializeApp(firebaseConfig);
@@ -28,9 +29,9 @@ async function cleanupRoom(roomId) {
         for (const c of answerSnap.docs) await deleteDoc(c.ref);
 
         await deleteDoc(doc(db, 'rooms', roomId));
-        console.log(`Комната ${roomId} удалена`);
+        console.log(`Room ${roomId} deleted`);
     } catch (err) {
-        console.error('Ошибка при очистке комнаты:', err);
+        console.error('Error clearing room:', err);
     }
 }
 
@@ -69,9 +70,9 @@ export function useWebRTC(initialRoomId, onMessage) {
 
         pc.onconnectionstatechange = async () => {
             status.value = pc.connectionState;
+            gameStore.connectionStatus = pc.connectionState;
             if (pc.connectionState === 'connected') {
                 gameStore.isMultiplayer = true;
-                startAutoSend(2000, ping);
                 if (roomId) {
                     setTimeout(async () => {
                         await cleanupRoom(roomId);
@@ -81,20 +82,12 @@ export function useWebRTC(initialRoomId, onMessage) {
         };
     }
 
-    function ping() {
-        return 'ping';
-    }
-
     function setupChannel() {
         channel.onopen = () => (status.value = 'connected');
         channel.onmessage = e => {
             try {
                 const data = JSON.parse(e.data);
-                if (data.type === 'new-room') {
-                    console.log('Получена новая ссылка от друга:', data.link);
-                } else {
-                    onMessage?.(data);
-                }
+                onMessage?.(data);
             } catch {
                 onMessage?.(e.data);
             }
@@ -139,13 +132,19 @@ export function useWebRTC(initialRoomId, onMessage) {
     }
 
     async function joinRoom() {
-        if (!roomId) throw new Error('roomId is empty');
+        if (!roomId) {
+            gameStore.connectionStatus = 'Room not found';
+            throw new Error('RoomId is empty');
+        }
 
         createPeerConnection();
 
         const roomRef = doc(db, 'rooms', roomId);
         const roomSnapshot = await getDoc(roomRef);
-        if (!roomSnapshot.exists()) throw new Error('Комната не найдена');
+        if (!roomSnapshot.exists()) {
+            gameStore.connectionStatus = 'Room not found';
+            throw new Error('Room not found');
+        }
 
         const offer = roomSnapshot.data().offer;
         await pc.setRemoteDescription(new RTCSessionDescription(offer));
@@ -165,15 +164,19 @@ export function useWebRTC(initialRoomId, onMessage) {
 
     function send(data) {
         if (channel?.readyState === 'open') {
-            channel.send(typeof data === 'string' ? data : JSON.stringify(data));
+            if (typeof data === 'string') {
+                channel.send(data);
+            } else {
+                channel.send(gameStringify(data));
+            }
         }
     }
 
-    function startAutoSend(intervalMs = 1000, payloadFn) {
+    function startAutoSend(intervalMs = 50, payloadFn) {
         stopAutoSend();
         sendTimer = setInterval(() => {
             if (channel?.readyState === 'open') {
-                const payload = payloadFn ? payloadFn() : {ts: Date.now()};
+                const payload = payloadFn?.();
                 send(payload);
             }
         }, intervalMs);

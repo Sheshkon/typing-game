@@ -25,7 +25,7 @@ export class LoopController {
         this.isRunning = false;
         this.gameStore = useGameStore();
         this.moveController = new MoveController();
-        this.animationCotroller = new AnimationController(ctx);
+        this.animationCotroller = new AnimationController(ctx, false);
         this.spawner = new Spawner();
     }
 
@@ -87,7 +87,7 @@ export class LoopController {
     animLoop() {
         if (!this.isRunning) return;
         const delta = this.#getDelta();
-        this.animationCotroller.update(delta);
+        this.animationCotroller.update(delta, this.gameStore);
         this.animLoopId = requestAnimationFrame(() => this.animLoop());
     }
 
@@ -99,6 +99,13 @@ export class LoopController {
             return;
         }
         const result = await GameResultsRepo.save(stats, language, {level});
+
+        if (this.gameStore.isMultiplayer) {
+            if (this.gameStore.multiplayerBestScore < stats.score){
+                this.gameStore.multiplayerBestScore = stats.score;
+            }
+        }
+
         this.#sendResultNotification(result, labels);
         await this.#updateData();
     }
