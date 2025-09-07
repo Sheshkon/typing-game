@@ -1,6 +1,8 @@
-import { sprites } from '@/sprites/config/sprites.js';
-import { resolveAsset } from '@/utils/assets.js';
-
+import {Effect} from '@/entity/effect.js';
+import {sprites} from '@/sprites/config/sprites.js';
+import {useGameStore} from '@/stores/game.js';
+import {Animation} from '@/types/animation.js';
+import {resolveAsset} from '@/utils/assets.js';
 
 export async function loadAssets() {
     const entities = Object.entries(sprites);
@@ -12,7 +14,7 @@ export async function loadAssets() {
                     new Promise((resolve, reject) => {
                         const img = new Image();
                         img.onload = () => {
-                            spriteSet[animName] = { ...cfg, image: img };
+                            spriteSet[animName] = {...cfg, image: img};
                             console.log(`✅ Loaded: ${entityName}/${animName}`);
                             resolve();
                         };
@@ -34,6 +36,13 @@ export async function loadAssets() {
             bg.src = resolveAsset('background-compressed.png');
         })
     ]);
+
+    const gameStore = useGameStore();
+
+    gameStore.effects = {
+        [Animation.COMBO]: new Effect(Animation.COMBO),
+        [Animation.HEAL]: new Effect(Animation.HEAL)
+    };
 }
 
 export function getSprite(entity, animation, direction = null) {
@@ -45,5 +54,3 @@ export function getSprite(entity, animation, direction = null) {
     }
     return cfg;
 }
-
-export class getSpriteWithoutDirection {}

@@ -83,3 +83,11 @@ body {
 h1 {
     margin: 0 0 8px;
 }
+
+button {
+    padding: 0.25rem 1.2rem 0.3rem;
+    font-weight: bold;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    background: linear-gradient(135deg, #7bff00, #dc2626);
+}

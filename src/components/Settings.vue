@@ -52,5 +52,7 @@ const languageOptions = computed(() => getLanguageOptions());
 
 .btn{
   margin-top: 0.25rem;
+  background: none;
+  padding: 0px;
 }
 </style>

@@ -2,7 +2,7 @@
 import {Notifications} from '@kyvg/vue3-notification';
 import {UseFullscreen} from '@vueuse/components';
 import {Fullscreen} from 'lucide-vue-next';
-import {nextTick, onBeforeUnmount, onMounted, onUnmounted, ref, watch} from 'vue';
+import {nextTick, onBeforeUnmount, onMounted, onUnmounted, provide, ref, watch} from 'vue';
 import {useI18n} from 'vue-i18n';
 
 import Description from '@/components/Description.vue';
@@ -12,17 +12,16 @@ import Rules from '@/components/Rules.vue';
 import Settings from '@/components/Settings.vue';
 import Setup from '@/components/Setup.vue';
 import Stats from '@/components/Stats.vue';
-import {Effect} from '@/entity/effect.js';
 import {TypeController} from '@/logic/attack.js';
 import {LoopController} from '@/logic/loop.js';
 import {loadAssets} from '@/sprites/spiteManager.js';
 import {useGameStore} from '@/stores/game';
-import {Animation} from '@/types/animation.js';
 
 const {t} = useI18n();
 const gameStore = useGameStore();
-const canvas = ref(null);
-const ctx = ref(null);
+const playerCanvas = ref(null);
+const opponentCanvas = ref(null);
+provide('opponentCanvas', opponentCanvas);
 const input = ref(null);
 const gameStarted = ref(false);
 
@@ -30,11 +29,15 @@ let loopController = null;
 let typeController = new TypeController();
 
 function setupCanvas() {
-  ctx.value = canvas.value.getContext('2d', {alpha: true});
-  canvas.value.width = gameStore.field.w;
-  canvas.value.height = gameStore.field.h;
-  canvas.value.style.width = gameStore.field.vw + 'px';
-  canvas.value.style.height = gameStore.field.vh + 'px';
+  function configureCanvas(canvas) {
+    canvas.width = gameStore.field.w;
+    canvas.height = gameStore.field.h;
+    canvas.style.width = gameStore.field.vw + 'px';
+    canvas.style.height = gameStore.field.vh + 'px';
+  }
+
+  configureCanvas(playerCanvas.value);
+  configureCanvas(opponentCanvas.value);
 }
 
 function toggleFullscreen(toggle) {
@@ -58,10 +61,6 @@ function handleKeyDown(e) {
 
 async function setUp() {
   await loadAssets();
-  gameStore.effects = {
-    [Animation.COMBO]: new Effect(Animation.COMBO),
-    [Animation.HEAL]: new Effect(Animation.HEAL)
-  };
   setupCanvas();
 }
 
@@ -96,8 +95,9 @@ onBeforeUnmount(() => window.removeEventListener('keydown', handleKeyDown));
 onMounted(async () => {
   await setUp();
   document.addEventListener('fullscreenchange', postToggleFullscreen);
-  loopController = new LoopController(ctx.value);
+  loopController = new LoopController(playerCanvas.value.getContext('2d', {alpha: true}));
 });
+
 </script>
 
 <template>
@@ -131,7 +131,8 @@ onMounted(async () => {
             >
               {{ t('labels.restart') }}
             </button>
-            <canvas ref='canvas' class='battlefield'></canvas>
+
+            <canvas ref='playerCanvas' class='battlefield'/>
             <button class='fullscreen-btn' @click='toggleFullscreen(toggle)'>
               <Fullscreen/>
             </button>
@@ -149,7 +150,19 @@ onMounted(async () => {
             <p class='hint' v-html='t("game.hint")'/>
           </div>
           <div class='side right'>
-            <Results/>
+            <Results v-if='!gameStore.isMultiplayer'/>
+            <div v-show='gameStore.isMultiplayer' class='opponent'>
+              <p>Opponent status: {{gameStore.connectionStatus}}</p>
+              <canvas ref='opponentCanvas' class='opponent-battlefield'/>
+              <div>
+                <p>Your best score:
+                  {{ (gameStore.stats.score < gameStore.multiplayerBestScore) ? gameStore.multiplayerBestScore : gameStore.stats.score }}</p>
+                <p>Current score: {{ gameStore.stats.score }}</p>
+                <p>Opponent best score:
+                  {{ (gameStore.opponentCurrentScore < gameStore.opponentBestScore) ? gameStore.opponentBestScore : gameStore.opponentCurrentScore }}</p>
+                <p>Current Opponent score: {{ gameStore.opponentCurrentScore}}</p>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -206,6 +219,22 @@ onMounted(async () => {
   background-image: url('@/assets/background-compressed.png');
   background-size: cover;
   height: auto !important;
+  border-radius: 1rem;
+}
+
+.opponent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.opponent-battlefield {
+  border: 2px solid #111;
+  background-image: url('@/assets/background-compressed.png');
+  background-size: cover;
+  height: 15rem !important;
+  width: auto !important;
   border-radius: 1rem;
 }
 

@@ -1,12 +1,4 @@
-import {
-    BLUR_FILTER,
-    COLLISION_ATTACK,
-    GAME_OVER_SCALE_FACTOR,
-    NO_FILTER,
-    TEXT_ALIGN,
-    TEXT_COLOR,
-    TEXT_FONT
-} from '@/constants.js';
+import {COLLISION_ATTACK, GAME_OVER_SCALE_FACTOR, TEXT_ALIGN, TEXT_COLOR, TEXT_FONT} from '@/constants.js';
 import {i18n} from '@/i18n.js';
 import {locales} from '@/locales/locale.js';
 import {getSprite} from '@/sprites/spiteManager.js';
@@ -15,39 +7,48 @@ import {Animation} from '@/types/animation.js';
 import {Entity} from '@/types/entity.js';
 
 export class AnimationController {
-    constructor(ctx) {
+    constructor(ctx, isOpponent) {
         this.ctx = ctx;
         this.ctx.textAlign = TEXT_ALIGN;
         this.ctx.font = TEXT_FONT;
         this.ctx.fillStyle = TEXT_COLOR;
-        this.gameStore = useGameStore();
+        this.store = useGameStore();
+        this.isOpponent = isOpponent;
     }
 
-    update(delta) {
-        const {field} = this.gameStore;
-        this.ctx.clearRect(0, 0, field.w, field.h);
-        this.#update(delta);
-        this.#draw();
+    update(delta, gameState) {
+        this.ctx.clearRect(0, 0, gameState.field.w, gameState.field.h);
+        if (!this.isOpponent) {
+            this.#update(delta, gameState);
+        }
+
+        this.#draw(gameState);
     }
 
-    #update(delta) {
-        const {entities, effects} = this.gameStore;
+    #update(delta, gameState) {
+        const {entities, effects} = gameState;
         Object.values(effects).filter(effect => effect.isEnabled).forEach(e => this.#updateEffect(e, delta));
-        entities.forEach(e => this.#updateSprite(e, delta));
+        entities
+            .filter(e => e)
+            .forEach(e => this.#updateSprite(e, delta, gameState));
     }
 
-    #draw() {
-        const {entities, effects} = this.gameStore;
+    #draw(gameState) {
+        const {entities, effects} = gameState;
         Object.values(effects)
+            .filter(e => e)
             .filter(e => e.isEnabled && e?.sprite)
             .forEach(e => this.#drawEffect(e.sprite));
-        entities.forEach(e => this.#drawEntity(e));
-        this.#drawGameOver();
+        entities
+            .filter(e => e)
+            .forEach(e => this.#drawEntity(e));
+        // this.#drawGameOver(gameState);
+        this.#drawMultiplayer(gameState);
     }
 
-    #updateEffect(effect, delta) {
+    #updateEffect(effect, delta = null) {
         const {sprite} = effect;
-        sprite.time += delta;
+        sprite.time += delta ?? 0;
         if (sprite.time > sprite.speed) {
             sprite.time = 0;
             sprite.frame++;
@@ -75,8 +76,7 @@ export class AnimationController {
         this.ctx.restore();
     }
 
-
-    #updateSprite(entity, delta) {
+    #updateSprite(entity, delta, gameState) {
         const {sprite} = entity;
 
         if (!sprite) return;
@@ -96,7 +96,7 @@ export class AnimationController {
                     if (entity.isDyingOrDead) {
                         entity.isDead = true;
                     } else if (sprite.entity !== Entity.PLAYER) {
-                        const {player} = this.gameStore;
+                        const {player} = gameState;
                         const dx = entity.x - player.x;
                         const dy = entity.y - player.y;
                         const dist = Math.sqrt(dx * dx + dy * dy);
@@ -107,7 +107,7 @@ export class AnimationController {
                 }
                 if (sprite.entity === Entity.PLAYER) {
                     entity.updateAnimation(Animation.IDLE);
-                    this.gameStore.leftActiveAim();
+                    gameState.leftActiveAim();
                 }
             }
         }
@@ -140,16 +140,24 @@ export class AnimationController {
         this.ctx.restore();
     }
 
-    #drawGameOver() {
-        if (!this.gameStore.gameOver) {
-            this.ctx.filter = NO_FILTER;
+    #drawMultiplayer(gameState) {
+        if (this.store.isMultiplayer && !this.store.opponentIsReady) {
+            const {player} = gameState;
+            this.ctx.save();
+            this.ctx.translate(player.x, player.y);
+            this.ctx.scale(GAME_OVER_SCALE_FACTOR, GAME_OVER_SCALE_FACTOR);
+            const gameOverText = 'Waiting opponent';
+            this.ctx.fillText(gameOverText, 0, -20);
+            this.ctx.restore();
+        }
+    }
+
+    #drawGameOver(gameState) {
+        if (!gameState.gameOver) {
             return;
         }
 
-        const {player} = this.gameStore;
-        this.ctx.filter = BLUR_FILTER;
-        this.ctx.save();
-        this.ctx.filter = NO_FILTER;
+        const {player} = gameState;
         this.ctx.translate(player.x, player.y);
         this.ctx.scale(GAME_OVER_SCALE_FACTOR, GAME_OVER_SCALE_FACTOR);
         const gameOverText = locales[i18n.global.locale.value].gameOver;

@@ -25,7 +25,7 @@ export class LoopController {
         this.isRunning = false;
         this.gameStore = useGameStore();
         this.moveController = new MoveController();
-        this.animationCotroller = new AnimationController(ctx);
+        this.animationCotroller = new AnimationController(ctx, false);
         this.spawner = new Spawner();
     }
 
@@ -59,27 +59,35 @@ export class LoopController {
     }
 
     spawnLoop() {
-        if(!this.gameStore.gameOver) this.spawner.spawnEnemy();
+        if (!this.gameStore.gameOver && this.gameStore.isReadyForMultiplayer) {
+            this.spawner.spawnEnemy();
+        }
         const delay = this.gameStore.levelConfig.spawnInterval;
         this.spawnTimerId = setTimeout(() => this.spawnLoop(), delay);
     }
 
     async gameLoop() {
+
         if (!this.isRunning) return;
+
         if (this.gameStore.gameOver) {
             stopSound();
             this.gameStore.stats.last.endTime = Date.now();
             await this.#handleResult();
             return;
         }
-        this.moveController.update(this.gameStore);
+
+        if (this.gameStore.isReadyForMultiplayer) {
+            this.moveController.update(this.gameStore);
+        }
+
         this.gameLoopId = requestAnimationFrame(async () => await this.gameLoop());
     }
 
     animLoop() {
         if (!this.isRunning) return;
         const delta = this.#getDelta();
-        this.animationCotroller.update(delta);
+        this.animationCotroller.update(delta, this.gameStore);
         this.animLoopId = requestAnimationFrame(() => this.animLoop());
     }
 
@@ -91,6 +99,13 @@ export class LoopController {
             return;
         }
         const result = await GameResultsRepo.save(stats, language, {level});
+
+        if (this.gameStore.isMultiplayer) {
+            if (this.gameStore.multiplayerBestScore < stats.score){
+                this.gameStore.multiplayerBestScore = stats.score;
+            }
+        }
+
         this.#sendResultNotification(result, labels);
         await this.#updateData();
     }
