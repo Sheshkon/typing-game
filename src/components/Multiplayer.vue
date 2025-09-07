@@ -58,9 +58,10 @@ function startSendDataToOpponent() {
 }
 
 async function handleRegenerate() {
+  linkCopied.value = false;
   gameStore.room = await regenerateRoom();
   console.log('New link:', inviteLink.value);
-  linkCopied.value = false;
+
 }
 
 defineExpose({
@@ -94,7 +95,7 @@ function copyInviteLink() {
   <notifications dangerouslySetInnerHtml :close-on-click='true'/>
   <div class='multiplayer' v-if='gameStore.isMultiplayer || gameStore.room'>
     <p>Status: {{ gameStore.connectionStatus }}</p>
-    <p v-if='inviteLink && !linkCopied && gameStore.connectionStatus !== "connected"'>
+    <p v-if='inviteLink && !linkCopied'>
       <button class='link-btn' @click='copyInviteLink'>Copy link for opponent</button>
     </p>
     <button class='link-btn' v-if='!params.get("room")' @click='handleRegenerate'>Regenerate link</button>
