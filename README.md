@@ -4,13 +4,6 @@ Got it. Here is the updated README with the correction that multiplayer is only 
 
 This is a fun and interactive typing game built with Vue.js. Test and improve your typing speed and accuracy as you progress through various levels.
 
-<p align="center">
-<img width="839" alt="Game Screenshot 1" src="https://github.com/user-attachments/assets/187f81a9-9f2f-43d6-8b17-1d09235e97b4">
-</p>
-<p align="center">
-<img width="1919" alt="Game Screenshot 2" src="https://github.com/user-attachments/assets/5faeba00-e568-468a-afed-16074fd4243c">
-</p>
-
 ## Description
 
 The Typing Game challenges players to type a sequence of words that appear on the screen. The game is designed to be engaging, with sound effects and visual sprites enhancing the user experience. As players successfully type words, they advance through levels of increasing difficulty. The core objective is to type as quickly and accurately as possible to achieve a high score.
@@ -77,3 +70,12 @@ Any contributions you make are **greatly appreciated**.
 3.  Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
 4.  Push to the Branch (`git push origin feature/AmazingFeature`)
 5.  Open a Pull Request
+
+### Screenshoots
+
+<p align="center">
+<img width="839" alt="Game Screenshot 1" src="https://github.com/user-attachments/assets/187f81a9-9f2f-43d6-8b17-1d09235e97b4">
+</p>
+<p align="center">
+<img width="1919" alt="Game Screenshot 2" src="https://github.com/user-attachments/assets/5faeba00-e568-468a-afed-16074fd4243c">
+</p>
